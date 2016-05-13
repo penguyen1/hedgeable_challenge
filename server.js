@@ -10,14 +10,14 @@ const app         = express();
 // const expressJWT = require('express-jwt');     // user auth - necessary?
 // const jwt = require('jsonwebtoken');
 
-const userRoutes = require( path.join(__dirname, '/routes/users'));
+// const userRoutes = require( path.join(__dirname, '/routes/users'));
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));    // index.html
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/users', userRoutes);
+// app.use('/users', userRoutes);
 
 // HOMEPAGE
 app.get('*', (req, res) => {
