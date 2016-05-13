@@ -12,6 +12,23 @@ import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router'
 // const Gameview = require('./components/gameview.js');
 
 
+
+var ApiDocumentation = require('api-documentation');
+var api = new ApiDocumentation.AccountTypesApi();
+console.log("hedgeable api: ", api);
+var token = "token_example"; // {String} The API partner's authorization token
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+// api.searchUsingGET1(token, callback);
+
+
+
 const App = React.createClass({
   getInitialState() {
     return {
@@ -34,6 +51,10 @@ const App = React.createClass({
 
   setUser: function(user){
    this.setState({user: user});
+  },
+
+  componentWillMount(){
+    console.log('componentWillMount')
   },
 
   render() {
