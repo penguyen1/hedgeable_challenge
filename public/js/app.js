@@ -103,8 +103,6 @@ const Error = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/" component={} />
-      <Route path="/" component={} />
     </Route>
     <Route path="*" component={Error} />
   </Router>
