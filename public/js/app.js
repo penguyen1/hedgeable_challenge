@@ -2,7 +2,7 @@
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router'
-import { Col, Grid, PageHeader, Row } from 'react-bootstrap'
+import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'
 const ApiDocumentation = require('api-documentation');
 var api = new ApiDocumentation.AccountTypesApi();
 var token = "token_example"; // API partner authorization token
@@ -106,7 +106,28 @@ const App = React.createClass({
             <h4>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>
           </PageHeader>
           <Row className="show-grid">
-            <Col xs={9} md={6}>accountHoldingsTable here</Col>
+            <Col xs={9} md={6}>
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Ticker</th>
+                    <th>Shares</th>
+                    <th>Total Balance</th>
+                    <th>Portfolio %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Stock A</th>
+                    <th>STKA</th>
+                    <th>1,000</th>
+                    <th>$400,000</th>
+                    <th>4.5%</th>
+                  </tr>
+                </tbody>
+              </Table>
+            </Col>
             <Col xs={9} md={6}>accountGrowthChart here</Col>
           </Row>
         </Grid>
