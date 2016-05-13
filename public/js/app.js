@@ -67,9 +67,19 @@ const App = React.createClass({
         type: 'GET',
         dataType: 'json'
       }).done((data) => {
-        console.log('getting all account types: ', data)
+        // console.log('getting all account types: ', data)
+
+        // authenticates client & gets client {usertoken}
+        $.ajax({
+          url: `https://api.hedgeable.com/client/login?token=${token}&email=apidemo@hedgeable.com&password=gethedged`,
+          type: 'POST',
+          dataType: 'json'
+        }).done((data) => {
+          console.log('{usertoken} is: ', data.response)
+        })
+
       })
-      
+
     });
   },
 
