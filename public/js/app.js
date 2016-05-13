@@ -1,16 +1,16 @@
 // 'use strict'
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
-import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router'
+import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'
 const ApiDocumentation = require('api-documentation');
 var api = new ApiDocumentation.AccountTypesApi();
 var token = "token_example"; // API partner authorization token
 
 const Error = require('./components/404.js');
-// const profileInfo = require('./components/profileInfo.js');
-// const holdingsTable = require('./components/holdingsTable.js');
-// const growthChart = require('./components/growthChart.js');
+// const ProfileInfo = require('./components/ProfileInfo.js');
+// const HoldingsTable = require('./components/HoldingsTable.js');
+// const GrowthChart = require('./components/GrowthChart.js');
 
 var callback = function(error, data, response) {
   if (error) {
@@ -114,7 +114,7 @@ const App = React.createClass({
                     <th>Ticker</th>
                     <th>Shares</th>
                     <th>Total Balance</th>
-                    <th>Portfolio %</th>
+                    <th>Portfolio percentage</th>
                   </tr>
                 </thead>
                 <tbody>
