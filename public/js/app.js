@@ -54,7 +54,16 @@ const App = React.createClass({
   },
 
   componentWillMount(){
-    console.log('componentWillMount')
+    console.log('currently at componentWillMount')
+
+    $.ajax({
+      url: 'https://api.hedgeable.com/authenticate?username=hedgeable-demo&key=abdluih2908uhb23ovboy39841hbf',
+      type: 'POST',
+      dataType: 'json'
+    }).done((data) => {
+      console.log('getting API Partner token: ', data)
+    });
+
   },
 
   render() {
