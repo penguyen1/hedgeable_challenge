@@ -1,3 +1,4 @@
+// 'use strict'
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router'
@@ -13,10 +14,10 @@ import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router'
 
 
 
-var ApiDocumentation = require('api-documentation');
+const ApiDocumentation = require('api-documentation');
 var api = new ApiDocumentation.AccountTypesApi();
 console.log("hedgeable api: ", api);
-var token = "token_example"; // {String} The API partner's authorization token
+var token = "token_example"; // API partner authorization token
 
 var callback = function(error, data, response) {
   if (error) {
@@ -25,9 +26,6 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-// api.searchUsingGET1(token, callback);
-
-
 
 const App = React.createClass({
   getInitialState() {
@@ -54,16 +52,25 @@ const App = React.createClass({
   },
 
   componentWillMount(){
-    console.log('currently at componentWillMount')
-
+    // verifies & retrieves API Partner authorization {token}
     $.ajax({
       url: 'https://api.hedgeable.com/authenticate?username=hedgeable-demo&key=abdluih2908uhb23ovboy39841hbf',
       type: 'POST',
       dataType: 'json'
     }).done((data) => {
-      console.log('getting API Partner token: ', data)
+      // console.log('getting API Partner token: ', data)
+      token = data.response     // verified API Partner authorization token
+      
+      // retrieves all account types
+      $.ajax({
+        url: `https://api.hedgeable.com/accounttypes?token=${token}`,
+        type: 'GET',
+        dataType: 'json'
+      }).done((data) => {
+        console.log('getting all account types: ', data)
+      })
+      
     });
-
   },
 
   render() {
