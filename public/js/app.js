@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router'
-import auth from './auth'
+// import auth from './auth'
 
 // const Signup = require('./components/signup.js');
 // const Login = require('./components/login.js');
