@@ -2,14 +2,15 @@
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router'
+import { Col, Grid, PageHeader, Row } from 'react-bootstrap'
 const ApiDocumentation = require('api-documentation');
 var api = new ApiDocumentation.AccountTypesApi();
 var token = "token_example"; // API partner authorization token
 
+const Error = require('./components/404.js');
 // const profileInfo = require('./components/profileInfo.js');
 // const holdingsTable = require('./components/holdingsTable.js');
 // const growthChart = require('./components/growthChart.js');
-// const errorPage = require('./components/404.js');
 
 var callback = function(error, data, response) {
   if (error) {
@@ -25,7 +26,8 @@ const App = React.createClass({
       token: "",
       usertoken: "",
       clientId: "",
-      portfolio: {}
+      portfolio: {},
+      loading: true
     }
   },
 
@@ -81,33 +83,35 @@ const App = React.createClass({
     });
   },
 
+  // delays render method for API call to complete
+  componentDidMount(){
+    var self = this;
+    setTimeout(() => {
+      self.setState({ loading: false })       
+    }, 600);
+  },
+
   render() {
-    return (
-      <div id="container-bg">
-        <div id="upperInfo">
-          <h1>Hello, {this.state.portfolio.length ? this.state.portfolio.client.firstName : "Guest"}!</h1>
-          { this.state.portfolio.length 
-            ? (<h3>Current portfolio balance: ${this.state.portfolio.latestBalance.toLocaleString()}</h3>)
-            : console.log('portfolio does not exist yet') }
-          { this.state.portfolio.length 
-            ? (<h4>Hedged Percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>)
-            : console.log('portfolio does not exist yet') }
-              
+    if(this.state.loading){
+      return (
+        <div id="container-bg">
+          <h3>Loading...</h3>
         </div>
-        <div id="lowerInfo">
-          input accountHoldingsTable & accountGrowthChart here
-        </div>
-      </div>
-    )
-  }
-});
-
-
-
-// 404 Error Page
-const Error = React.createClass({
-  render(){
-    return(<h1>404 Error! Something went wrong here..</h1>)
+      )
+    } else {
+      return (
+        <Grid>
+          <PageHeader> Hello, {this.state.portfolio.client.firstName}!<br/>
+            <h4>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</h4>
+            <h4>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>
+          </PageHeader>
+          <Row className="show-grid">
+            <Col xs={9} md={6}>accountHoldingsTable here</Col>
+            <Col xs={9} md={6}>accountGrowthChart here</Col>
+          </Row>
+        </Grid>
+      )
+    }
   }
 });
 
