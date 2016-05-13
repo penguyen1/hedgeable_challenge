@@ -5,11 +5,8 @@ const logger      = require('morgan');        // logs request details
 const path        = require('path');          // defines API route paths
 const bodyParser  = require('body-parser');   // parses user input into JSON
 const app         = express();
-// var ApiDocumentation = require('api-documentation');
-// var api = new ApiDocumentation.AccountTypesApi();
-// var token = "token_example"; // {String} The API partner's authorization token
 
-  // user auth - necessary?
+  // user auth necessary? - ask Kristi!
 // const secret = process.env.SECRET;
 // const expressJWT = require('express-jwt');     
 // const jwt = require('jsonwebtoken');
@@ -18,7 +15,7 @@ const app         = express();
 // app.use('/users', userRoutes);
 
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'public')));    // index.html
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -33,17 +30,3 @@ var port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log('Hellooo Handsome!! ', port);
 });
-
-
-// var ApiDocumentation = require('api-documentation');
-// var api = new ApiDocumentation.AccountTypesApi();
-// var token = "token_example"; // {String} The API partner's authorization token
-
-// var callback = function(error, data, response) {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.log('API called successfully. Returned data: ' + data);
-//   }
-// };
-// api.searchUsingGET1(token, callback);
