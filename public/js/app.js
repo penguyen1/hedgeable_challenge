@@ -103,7 +103,7 @@ const App = React.createClass({
     var self = this;
     setTimeout(() => {
       self.setState({ loading: false })       
-    }, 600);
+    }, 1000);
   },
 
   renderAsset(asset){
@@ -147,7 +147,6 @@ const App = React.createClass({
                   </Tabs>
                 </Col>
               </Row>              
-              {/* <AcctInfo details={this.state.portfolio.balances} /> */}
             </Tab>
 
             {this.state.portfolio.accountsInfo.map( el =>

@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { browserHistory, Router, Route, Link } from 'react-router'
-import { Table } from 'react-bootstrap'         // any other modules???
+import { Collapse, Panel, Table, Well } from 'react-bootstrap'         // any other modules???
 
 const Error = require('./404.js');
 // const Profile = require('./components/Profile.js');
@@ -45,12 +45,11 @@ const Assets = React.createClass({
       <Table striped condensed hover responsive>
         <thead>
           <tr>
-            <th style={{textAlign:'center'}}>Name</th>
-            <th style={{textAlign:'center'}}>Ticker</th>
-            <th style={{textAlign:'center'}}>Quantity</th>
-            <th style={{textAlign:'center'}}>Market Value</th>
-            <th style={{textAlign:'center'}}>Portfolio percentage</th>
-            <th style={{textAlign:'center'}}>Total</th>
+            <th style={{textAlign:'center', fontSize:'16px'}}>Name</th>
+            <th style={{textAlign:'center', fontSize:'16px'}}>Quantity</th>
+            <th style={{textAlign:'center', fontSize:'16px'}}>Market Value</th>
+            <th style={{textAlign:'center', fontSize:'16px'}}>Portfolio percentage</th>
+            <th style={{textAlign:'center', fontSize:'16px'}}>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +66,12 @@ const AssetInfo = React.createClass({
     router: React.PropTypes.object.isRequired
   },
 
+  getInitialState(){
+    return {
+      open: false
+    }
+  },
+
   componentWillMount(){
     // console.log("checking... router: ", this.context.router)
     // console.log("checking context: ", this.context)
@@ -78,13 +83,14 @@ const AssetInfo = React.createClass({
     console.log("asset security id clicked: ", this.props.details.security.id)
     this.context.setCurrentAssetID(this.props.details.security.id);
     // this.context.router.replace('/profile');
+
+    this.setState({ open: !this.state.open });
   },
 
   render(){
     return (
       <tr key={this.props.details.security.id} onClick={this.handleClick}>
         <td>{this.props.details.security.name}</td>
-        <td>{this.props.details.security.ticker}</td>
         <td>{this.props.details.shares.toFixed(2)}</td>
         <td>${isNaN(this.props.details.amount/this.props.details.shares)
                 ? "0.00"
@@ -97,3 +103,36 @@ const AssetInfo = React.createClass({
 });
 
 module.exports = Assets;
+
+// const CollapsibleInfo = React.createClass({
+//   getInitialState(){
+//     return {
+//       open: false
+//     }
+//   },
+
+//   handleClick(event){
+//     event.preventDefault();
+//     console.log("asset security id clicked: ", this.props.details.security.id)
+//     // this.context.setCurrentAssetID(this.props.details.security.id);
+//     // this.context.router.replace('/profile');
+
+//     this.setState({ open: !this.state.open });
+//   },
+
+//   render(){
+//     return (
+//       <tr key={this.props.details.security.id} onClick={this.handleClick}>
+//         <td colSpan="5">
+//           <Collapse in={this.state.open}>
+//             <div>
+//               <Well>
+//                 Hello!
+//               </Well>
+//             </div>
+//           </Collapse>
+//         </td>
+//       </tr>
+//     )
+//   }
+// });
