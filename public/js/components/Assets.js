@@ -86,7 +86,9 @@ const AssetInfo = React.createClass({
         <td>{this.props.details.security.name}</td>
         <td>{this.props.details.security.ticker}</td>
         <td>{this.props.details.shares.toFixed(2)}</td>
-        <td>${(this.props.details.amount/this.props.details.shares).toFixed(2)}</td>
+        <td>${isNaN(this.props.details.amount/this.props.details.shares)
+                ? "0.00"
+                : (this.props.details.amount/this.props.details.shares).toFixed(2)}</td>
         <td>{(this.props.details.weight*100).toFixed(2)}%</td>
         <td>${this.props.details.amount.toFixed(2)}</td>
       </tr>

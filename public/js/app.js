@@ -6,7 +6,7 @@ import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs, Table } from 'react-b
 
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
-const AcctProfile = require('./components/AcctProfile.js');
+const AcctInfo = require('./components/AcctInfo.js');
 const Header = require('./components/Header.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
@@ -110,9 +110,9 @@ const App = React.createClass({
   handleSelect(key){
     // console.log("Viewing Account: ", key)
     this.setState({ key: key });
-    // this.router.replace('/acctProfile');
+    // this.router.replace('/acctInfo');
     // replace({
-    //   pathname: '/acctProfile',
+    //   pathname: '/acctInfo',
     //   state: { nextPathname: nextState.location.pathname }
     // })
   },
@@ -159,8 +159,8 @@ const App = React.createClass({
 
             {this.state.portfolio.accountsInfo.map( el =>
               <Tab eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
-                <Header key={el.account.id} details={el} />
-                {/* <AcctProfile key={el.account.id} details={el}/> */}
+                <Header details={el} />
+                <AcctInfo details={el.balances} />
               </Tab> 
             )}
           </Tabs>
@@ -175,7 +175,7 @@ render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path="/assets" component={Assets} />
-      <Route path="/acctProfile" component={AcctProfile} />
+      <Route path="/acctInfo" component={AcctInfo} />
       <Route path="/header" component={Header} />
     </Route>
     <Route path="*" component={Error} />
