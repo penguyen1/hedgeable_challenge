@@ -36,6 +36,7 @@
     "react-bootstrap": "^0.29.4",
     "react-chartjs": "^0.7.3",
     "react-d3-basic": "^1.6.11",
+    "react-d3-core": "^1.2.8",
     "react-dom": "^0.14.7",
     "react-router": "^2.4.0",
     "reactify": "^1.1.1",
