@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { browserHistory, Router, Route, Link } from 'react-router'
-import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'         // any other modules???
+import { Table } from 'react-bootstrap'         // any other modules???
 
 const Error = require('./404.js');
 // const Profile = require('./components/Profile.js');
@@ -14,12 +14,6 @@ const Assets = React.createClass({
     usertoken: React.PropTypes.string.isRequired,
     setCurrentAssetID: React.PropTypes.func.isRequired,
     router: React.PropTypes.object.isRequired
-  },
-
-  getInitialState(){
-    return{
-      asset: {}
-    }
   },
 
   componentWillMount(){
@@ -36,8 +30,8 @@ const Assets = React.createClass({
   // },
 
   renderAsset(asset){
-    // converts asset Cash security id 0 to 1393 
-    // asset.security.id < 1 ? asset.security.id = 1393 : asset.security.id;
+    // converts Cash security id from 0 to 1393 
+    asset.security.id < 1 ? asset.security.id = 1393 : asset.security.id;
     // console.log("rendering asset id: ", asset.security.id)
     
     // console.log("rendering asset: ", asset)
@@ -47,9 +41,6 @@ const Assets = React.createClass({
   },
 
   render(){
-    // list of assets
-    var assets = []; 
-
     return (
       <Table striped condensed hover responsive>
         <thead>
@@ -71,10 +62,7 @@ const Assets = React.createClass({
 });
 
 const AssetInfo = React.createClass({
-  // context data from parent component
   contextTypes: {
-    token: React.PropTypes.string.isRequired,
-    usertoken: React.PropTypes.string.isRequired,
     setCurrentAssetID: React.PropTypes.func.isRequired,
     router: React.PropTypes.object.isRequired
   },
@@ -89,7 +77,7 @@ const AssetInfo = React.createClass({
     event.preventDefault();
     console.log("asset security id clicked: ", this.props.details.security.id)
     this.context.setCurrentAssetID(this.props.details.security.id);
-    this.context.router.replace('/profile');
+    // this.context.router.replace('/profile');
   },
 
   render(){

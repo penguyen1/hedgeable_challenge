@@ -2,11 +2,11 @@
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link } from 'react-router'
-import { Col, Grid, PageHeader, Row, Tab, Tabs, Table } from 'react-bootstrap'
+import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs, Table } from 'react-bootstrap'
 
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
-// const Profile = require('./components/Profile.js');
+const AcctProfile = require('./components/AcctProfile.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
 var callback = function(error, data, response) {
@@ -109,8 +109,11 @@ const App = React.createClass({
   handleSelect(key){
     // console.log("Viewing Account: ", key)
     this.setState({ key: key });
-    // this.router.replace('/profile');
-    console.log('App component router: ', this.router)
+    // this.router.replace('/acctProfile');
+    // replace({
+    //   pathname: '/acctProfile',
+    //   state: { nextPathname: nextState.location.pathname }
+    // })
   },
 
   renderAsset(asset){
@@ -124,10 +127,6 @@ const App = React.createClass({
   },
 
   render() {
-    // list of account holdings
-    var holdings = [];    
-    var accounts = [];
-
     if(this.state.loading){
       return (
         <div id="container-bg">
@@ -137,27 +136,34 @@ const App = React.createClass({
     } else {
       return (
         <Grid>
-          <PageHeader> Hello, {this.state.portfolio.client.firstName}!<br/>
-            <h4>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</h4>
-            <h4>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>
-          </PageHeader>
-          <Row className="show-grid">
-            <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab">
-              <Tab eventKey={1} title="Portfolio">
+          <Jumbotron>
+            <h1>Hello, {this.state.portfolio.client.firstName}!</h1>
+            <p>For more details, click on the tabs or list of assets below!</p>
+          </Jumbotron>
+          
+          <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab">
+            <Tab eventKey={1} title="My Portfolio">
+              <PageHeader>
+                <h1>Account Portfolio</h1>
+                <h4>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</h4>
+                <h4>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>
+              </PageHeader>
+            
+              <Row className="show-grid">
                 <Col xs={10} md={7}>
                   <Assets details={this.state.portfolio.balances.holdings} />
                 </Col>
-
                 <Col xs={8} md={5}>accountGrowthChart here</Col>
-              </Tab>
-              {this.state.portfolio.accountsInfo.map( el =>
-                <Tab eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
-                  {el.account.name}
-                </Tab> 
-              )}
-              
-            </Tabs>
-          </Row>
+              </Row>
+            </Tab>
+
+            {this.state.portfolio.accountsInfo.map( el =>
+              <Tab eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
+                { el.account.name }
+                {/* <AcctProfile key={el.account.id} data={el}/> */}
+              </Tab> 
+            )}
+          </Tabs>
         </Grid>
       )
     }
@@ -169,6 +175,7 @@ render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path="/assets" component={Assets} />
+      <Route path="/acctProfile" component={AcctProfile} />
     </Route>
     <Route path="*" component={Error} />
   </Router>

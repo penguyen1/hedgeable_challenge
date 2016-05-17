@@ -24,7 +24,7 @@ const Profile = React.createClass({
   componentWillMount(){
     // console.log("checking... router: ", this.context.router)
     console.log("checking context: ", this.context)
-    // console.log("checking passed props: ", this.props.details)
+    console.log("checking passed props: ", this.props.data)
     // console.log("checking currentAssetID: ", this.context.currentAssetID)
   },
 
