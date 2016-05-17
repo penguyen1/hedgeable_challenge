@@ -7,6 +7,7 @@ import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs, Table } from 'react-b
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
 const AcctProfile = require('./components/AcctProfile.js');
+const Header = require('./components/Header.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
 var callback = function(error, data, response) {
@@ -144,9 +145,9 @@ const App = React.createClass({
           <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab">
             <Tab eventKey={1} title="My Portfolio">
               <PageHeader>
-                <h1>Account Portfolio</h1>
-                <h4>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</h4>
-                <h4>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>
+                Account Portfolio<br/>
+                <small>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
+                <small>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
               </PageHeader>
             
               <Row className="show-grid">
@@ -159,8 +160,8 @@ const App = React.createClass({
 
             {this.state.portfolio.accountsInfo.map( el =>
               <Tab eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
-                { el.account.name }
-                {/* <AcctProfile key={el.account.id} data={el}/> */}
+                <Header key={el.account.id} details={el} />
+                {/* <AcctProfile key={el.account.id} details={el}/> */}
               </Tab> 
             )}
           </Tabs>
@@ -176,6 +177,7 @@ render((
     <Route path="/" component={App}>
       <Route path="/assets" component={Assets} />
       <Route path="/acctProfile" component={AcctProfile} />
+      <Route path="/header" component={Header} />
     </Route>
     <Route path="*" component={Error} />
   </Router>
