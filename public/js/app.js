@@ -5,6 +5,7 @@ import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs, Table } from 'react-bootstrap'
 var Chart = require('react-d3-core').Chart;
 var LineChart = require('react-d3-basic').LineChart;
+var d3 = require('d3-shape');
 
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
@@ -115,15 +116,14 @@ const App = React.createClass({
         </div>
       )
     } else {
+      // console.log('Data: ', this.state.portfolio)
       var balancesData = this.state.portfolio.balances.balances;
       var returnsData = this.state.portfolio.balances.returns;
-      // var chartSeries = [{
-      //   field: 'BMI',
-      //   name: 'BMI',
-      //   color: '#ff7f0e'
-      // }],
-      // margins = {left:0, right:0, top:0, bottom:0},
-      // x = function(d){ return +(d.date.split('-').join('')) }
+      // balancesData.forEach(el => console.log("balancesData date: ", el.date))
+      // console.log('returnsData: ', returnsData)
+      var line = d3.line()
+        .x(function(d){ console.log("x-axis: ", d.date})            //{ return x(d.date) })
+        .y(function(d){ console.log("y-axis: ", d.value})            //return y(d.value) });
 
       return (
         <Grid>
@@ -146,10 +146,7 @@ const App = React.createClass({
                 <Col xs={8} md={5}>
                   <Tabs defaultActiveKey={1} id="growthChart-tabs">
                     <Tab eventKey={1} title="Returns">
-                      // <Chart title="Testing123" width={600} height={300} margins={margins}>
-                      //   <LineChart showXGrid={false} showYGrid={false} margins={margins} title="Testing123"
-                      //         data={this.state.portfolio.balances.returns} width={600} height={300} chartSeries={chartSeries} x={x} />
-                      // </Chart>
+                      Growth Line Chart of Portfolio Returns
                     </Tab>
                     <Tab eventKey={2} title="Balances"> Growth Line Chart of Portfolio Balances </Tab>
                   </Tabs>
