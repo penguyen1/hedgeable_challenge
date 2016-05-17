@@ -3,10 +3,6 @@ import React from 'react'
 import { browserHistory, Router, Route, Link } from 'react-router'
 import { PageHeader } from 'react-bootstrap'         // any other modules???
 
-const Error = require('./404.js');
-// const Assets = require('./components/Assets.js');
-// const GrowthChart = require('./components/GrowthChart.js');
-
 const Header = React.createClass({
   getInitialState(){
     return {

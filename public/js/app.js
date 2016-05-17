@@ -3,15 +3,20 @@ import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs, Table } from 'react-bootstrap'
+
+// React D3 modules
 var Chart = require('react-d3-core').Chart;
 var LineChart = require('react-d3-basic').LineChart;
 var d3 = require('d3-shape');
+var rd3 = require('rd3');
+const LineChart = rd3.LineChart;
 
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
 const AcctInfo = require('./components/AcctInfo.js');
 const Header = require('./components/Header.js');
 // const GrowthChart = require('./components/GrowthChart.js');
+const ChartTest = require('./components/ChartTest.js');
 
 var callback = function(error, data, response) {
   if (error) {
@@ -121,9 +126,10 @@ const App = React.createClass({
       var returnsData = this.state.portfolio.balances.returns;
       // balancesData.forEach(el => console.log("balancesData date: ", el.date))
       // console.log('returnsData: ', returnsData)
-      var line = d3.line()
-        .x(function(d){ console.log("x-axis: ", d.date})            //{ return x(d.date) })
-        .y(function(d){ console.log("y-axis: ", d.value})            //return y(d.value) });
+      console.log('balancesData: ', balancesData)
+      // var line = d3.line()
+      //   .x(function(d){ console.log("x-axis: ", d.date})            //{ return x(d.date) })
+      //   .y(function(d){ console.log("y-axis: ", d.value})            //return y(d.value) });
 
       return (
         <Grid>
@@ -146,7 +152,8 @@ const App = React.createClass({
                 <Col xs={8} md={5}>
                   <Tabs defaultActiveKey={1} id="growthChart-tabs">
                     <Tab eventKey={1} title="Returns">
-                      Growth Line Chart of Portfolio Returns
+                      {/* Growth Line Chart of Portfolio Returns */}
+                      <ChartTest details={balancesData} />
                     </Tab>
                     <Tab eventKey={2} title="Balances"> Growth Line Chart of Portfolio Balances </Tab>
                   </Tabs>
@@ -173,6 +180,7 @@ render((
       <Route path="/assets" component={Assets} />
       <Route path="/acctInfo" component={AcctInfo} />
       <Route path="/header" component={Header} />
+      <Route path="/chartTest" component={ChartTest} />
     </Route>
     <Route path="*" component={Error} />
   </Router>
