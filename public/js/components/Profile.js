@@ -4,11 +4,11 @@ import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'         // any other modules???
 
 const Error = require('./404.js');
-// const ProfileInfo = require('./components/ProfileInfo.js');
-// const HoldingsTable = require('./components/HoldingsTable.js');
+// const Profile = require('./components/Profile.js');
+// const Assets = require('./components/Assets.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
-const ProfileInfo = React.createClass({
+const Profile = React.createClass({
   getInitialState(){
     return{}
   },
@@ -49,4 +49,4 @@ const ProfileInfo = React.createClass({
 //   }
 // });
 
-module.exports = ProfileInfo;
+module.exports = Profile;

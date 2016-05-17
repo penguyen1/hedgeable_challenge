@@ -7,8 +7,8 @@ import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'         // a
 
 
 const Error = require('./404.js');
-// const ProfileInfo = require('./components/ProfileInfo.js');
-// const HoldingsTable = require('./components/HoldingsTable.js');
+// const Profile = require('./components/Profile.js');
+// const Assets = require('./components/Assets.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
 const GrowthChart = React.createClass({

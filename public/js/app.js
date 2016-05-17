@@ -1,15 +1,12 @@
-// 'use strict'
+'use strict'
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link } from 'react-router'
-import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'
-const ApiDocumentation = require('api-documentation');                        // delete?
-var api = new ApiDocumentation.AccountTypesApi();                             // delete?
-var token = "token_example"; // API partner authorization token               // delete?
+import { Col, Grid, PageHeader, Row, Tab, Tabs, Table } from 'react-bootstrap'
 
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
-// const ProfileInfo = require('./components/ProfileInfo.js');
+// const Profile = require('./components/Profile.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
 var callback = function(error, data, response) {
@@ -26,6 +23,7 @@ const App = React.createClass({
       token: "",
       usertoken: "",
       clientId: "",
+      currentAssetID: 0,
       portfolio: {},
       loading: true
     }
@@ -35,16 +33,24 @@ const App = React.createClass({
   childContextTypes: {
     token: React.PropTypes.string,
     usertoken: React.PropTypes.string,
+    currentAssetID: React.PropTypes.number,
+    setCurrentAssetID: React.PropTypes.func,
     portfolio: React.PropTypes.object
   },
 
-  getChildContext: function(){
-   return {
-    token: this.state.token,
-    usertoken: this.state.usertoken,
-    portfolio: this.state.portfolio
-   }
- },
+  getChildContext(){
+    return {
+      token: this.state.token,
+      usertoken: this.state.usertoken,
+      currentAssetID: this.state.currentAssetID,
+      setCurrentAssetID: this.setCurrentAssetID,
+      portfolio: this.state.portfolio
+    }
+  },
+
+  setCurrentAssetID(id){
+   this.setState({ currentAssetID: id });
+  },
 
   componentWillMount(){
     // verifies & retrieves API Partner authorization {token}
@@ -100,20 +106,19 @@ const App = React.createClass({
   },
 
   renderAsset(asset){
-    // Cash Asset security id: 0
-    // if(asset.security.id < 1){
-    //   asset.security.id = 1393
-    // }
-    console.log("rendering asset id: ", asset.security.id)
-    // console.log("rendering asset info: ", asset)
+    // converts asset Cash security id 0 to 1393 
+    asset.security.id < 1 ? asset.security.id = 1393 : asset.security.id;
+    // console.log("rendering asset id: ", asset.security.id)
+    
     return(
       <Assets key={asset.security.id} details={asset}/>
     )
   },
 
   render() {
-    var holdings = [];
-    // console.log('this.state: ', this.state)
+    // list of account holdings
+    var holdings = [];    
+    
     if(this.state.loading){
       return (
         <div id="container-bg">
@@ -129,15 +134,16 @@ const App = React.createClass({
           </PageHeader>
           <Row className="show-grid">
 
-            <Col xs={9} md={6}>
-              <Table responsive>
+            <Col xs={10} md={7}>
+              <Table striped condensed hover responsive>
                 <thead>
                   <tr>
-                    <th>Title</th>
+                    <th>Name</th>
                     <th>Ticker</th>
-                    <th>Shares</th>
-                    <th>Total Balance</th>
+                    <th>Quantity</th>
+                    <th>Market Value</th>
                     <th>Portfolio percentage</th>
+                    <th>Total Value</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -147,7 +153,7 @@ const App = React.createClass({
               </Table>
             </Col>
 
-            <Col xs={9} md={6}>accountGrowthChart here</Col>
+            <Col xs={8} md={5}>accountGrowthChart here</Col>
 
           </Row>
         </Grid>
