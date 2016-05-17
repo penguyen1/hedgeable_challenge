@@ -5,11 +5,11 @@ import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs, Table } from 'react-bootstrap'
 
 // React D3 modules
-var Chart = require('react-d3-core').Chart;
-var LineChart = require('react-d3-basic').LineChart;
-var d3 = require('d3-shape');
-var rd3 = require('rd3');
-const LineChart = rd3.LineChart;
+// var Chart = require('react-d3-core').Chart;
+// var LineChart = require('react-d3-basic').LineChart;
+// var d3 = require('d3-shape');
+// var rd3 = require('rd3');
+// const LineChart = rd3.LineChart;
 
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
@@ -126,7 +126,7 @@ const App = React.createClass({
       var returnsData = this.state.portfolio.balances.returns;
       // balancesData.forEach(el => console.log("balancesData date: ", el.date))
       // console.log('returnsData: ', returnsData)
-      console.log('balancesData: ', balancesData)
+      // console.log('balancesData: ', balancesData)
       // var line = d3.line()
       //   .x(function(d){ console.log("x-axis: ", d.date})            //{ return x(d.date) })
       //   .y(function(d){ console.log("y-axis: ", d.value})            //return y(d.value) });
@@ -153,7 +153,7 @@ const App = React.createClass({
                   <Tabs defaultActiveKey={1} id="growthChart-tabs">
                     <Tab eventKey={1} title="Returns">
                       {/* Growth Line Chart of Portfolio Returns */}
-                      <ChartTest details={balancesData} />
+                      <ChartTest />
                     </Tab>
                     <Tab eventKey={2} title="Balances"> Growth Line Chart of Portfolio Balances </Tab>
                   </Tabs>

@@ -30,7 +30,7 @@ const AcctInfo = React.createClass({
 
   componentWillMount(){
     // console.log("checking context: ", this.context)
-    console.log("checking AcctInfo props: ", this.props.details)
+    // console.log("checking AcctInfo props: ", this.props.details)
     // returns: this.props.details.returns
     // balances: this.props.details.balances
     this.setState({
@@ -59,13 +59,13 @@ const AcctInfo = React.createClass({
   }
 });
 
-// var data = {
-//   labels: ["January", "February", "March", "April", "May", "June", "July"],
-//   datasets: [{
-//     label: "My First dataset",
-//     borderColor: "rgba(75,192,192,1)",
-//     data: [65, 59, 80, 81, 56, 55, 40],
-//   }]
-// };
+var data = {
+  labels: ["January", "February", "March", "April", "May", "June", "July"],
+  datasets: [{
+    label: "My First dataset",
+    borderColor: "rgba(75,192,192,1)",
+    data: [65, 59, 80, 81, 56, 55, 40],
+  }]
+};
 
 module.exports = AcctInfo;
