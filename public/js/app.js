@@ -8,7 +8,7 @@ var api = new ApiDocumentation.AccountTypesApi();                             //
 var token = "token_example"; // API partner authorization token               // delete?
 
 const Error = require('./components/404.js');
-const HoldingsTable = require('./components/HoldingsTable.js');
+const Assets = require('./components/Assets.js');
 // const ProfileInfo = require('./components/ProfileInfo.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
@@ -37,6 +37,14 @@ const App = React.createClass({
     usertoken: React.PropTypes.string,
     portfolio: React.PropTypes.object
   },
+
+  getChildContext: function(){
+   return {
+    token: this.state.token,
+    usertoken: this.state.usertoken,
+    portfolio: this.state.portfolio
+   }
+ },
 
   componentWillMount(){
     // verifies & retrieves API Partner authorization {token}
@@ -77,7 +85,7 @@ const App = React.createClass({
         }).done((data) => {
           // console.log('entire client portfolio: ', data.response)
           this.setState({ portfolio: data.response })
-          // console.log('this.state: ', this.state)
+          console.log('this.state: ', this.state)
         });
       });
     });
@@ -91,9 +99,21 @@ const App = React.createClass({
     }, 600);
   },
 
-  render() {
-    console.log('this.state: ', this.state)
+  renderAsset(asset){
+    // Cash Asset security id: 0
+    // if(asset.security.id < 1){
+    //   asset.security.id = 1393
+    // }
+    console.log("rendering asset id: ", asset.security.id)
+    // console.log("rendering asset info: ", asset)
+    return(
+      <Assets key={asset.security.id} details={asset}/>
+    )
+  },
 
+  render() {
+    var holdings = [];
+    // console.log('this.state: ', this.state)
     if(this.state.loading){
       return (
         <div id="container-bg">
@@ -109,7 +129,23 @@ const App = React.createClass({
           </PageHeader>
           <Row className="show-grid">
 
-            <HoldingsTable />
+            <Col xs={9} md={6}>
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Ticker</th>
+                    <th>Shares</th>
+                    <th>Total Balance</th>
+                    <th>Portfolio percentage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.portfolio.balances.holdings.forEach( el => holdings.push(this.renderAsset(el)) )}
+                  {holdings}
+                </tbody>
+              </Table>
+            </Col>
 
             <Col xs={9} md={6}>accountGrowthChart here</Col>
 
@@ -124,7 +160,7 @@ const App = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/holdings" component={HoldingsTable} />
+      <Route path="/assets" component={Assets} />
     </Route>
     <Route path="*" component={Error} />
   </Router>

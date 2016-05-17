@@ -5,38 +5,37 @@ import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'         // a
 
 const Error = require('./404.js');
 // const ProfileInfo = require('./components/ProfileInfo.js');
-// const HoldingsTable = require('./components/HoldingsTable.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
-const HoldingsTable = React.createClass({
-  getInitialState(){
-    return{}
-  },
-
-  // sets context from parent component
+const Assets = React.createClass({
+  // context data from parent component
   contextTypes: {
     token: React.PropTypes.string.isRequired,
     usertoken: React.PropTypes.string.isRequired,
-    portfolio: React.PropTypes.object.isRequired,
+    // portfolio: React.PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired,
   },
 
+  getInitialState(){
+    return{
+      asset: {}
+    }
+  },
+
   componentWillMount(){
-    console.log("checking... token: ", this.context.token)
-    console.log("checking... usertoken: ", this.context.usertoken)
-    console.log("checking... portfolio: ", this.context.portfolio)
-    console.log("checking... router: ", this.context.router)
+    // console.log("checking... router: ", this.context.router)
+    console.log("checking... token: ", this.context)
+    console.log("checking... asset: ", this.props.details)
   },
 
   componentDidMount(){
-    console.log("HoldingsTable component is mounted")
+    console.log("Assets component is mounted")
   },
 
   renderAsset(asset){
-    return(
-      <Asset key={} details={} />
-      <Hunt key={hunt.hunt_id} details={hunt} deleteHunt={this.deleteHunt}/>
-    )
+      // <Asset key={} details={} />
+      // <Hunt key={hunt.hunt_id} details={hunt} deleteHunt={this.deleteHunt}/>
+    // return(<div>hi from renderAsset</div>)
   },
 
   render(){
@@ -65,22 +64,8 @@ const HoldingsTable = React.createClass({
     //   </Col>
     // )
 
-    return(<div>HoldingsTable component info</div>)
+    return(<div>Assets component info</div>)
   }
 });
 
-const Asset = React.createClass({
-  getInitialState(){
-    return{}
-  },
-
-  componentWillMount(){},
-
-  componentDidMount(){},
-
-  render(){
-    return();
-  }
-})
-
-module.exports = HoldingsTable;
+module.exports = Assets;
