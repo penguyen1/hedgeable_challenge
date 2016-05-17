@@ -3,13 +3,13 @@ import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'
-const ApiDocumentation = require('api-documentation');
-var api = new ApiDocumentation.AccountTypesApi();
-var token = "token_example"; // API partner authorization token
+const ApiDocumentation = require('api-documentation');                        // delete?
+var api = new ApiDocumentation.AccountTypesApi();                             // delete?
+var token = "token_example"; // API partner authorization token               // delete?
 
 const Error = require('./components/404.js');
-// const ProfileInfo = require('./components/ProfileInfo.js');
 // const HoldingsTable = require('./components/HoldingsTable.js');
+// const ProfileInfo = require('./components/ProfileInfo.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
 var callback = function(error, data, response) {
@@ -77,7 +77,7 @@ const App = React.createClass({
         }).done((data) => {
           // console.log('entire client portfolio: ', data.response)
           this.setState({ portfolio: data.response })
-          console.log('this.state: ', this.state)
+          // console.log('this.state: ', this.state)
         });
       });
     });
@@ -92,6 +92,8 @@ const App = React.createClass({
   },
 
   render() {
+    console.log('this.state: ', this.state)
+    
     if(this.state.loading){
       return (
         <div id="container-bg">
@@ -106,6 +108,7 @@ const App = React.createClass({
             <h4>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>
           </PageHeader>
           <Row className="show-grid">
+
             <Col xs={9} md={6}>
               <Table responsive>
                 <thead>
@@ -128,7 +131,9 @@ const App = React.createClass({
                 </tbody>
               </Table>
             </Col>
+
             <Col xs={9} md={6}>accountGrowthChart here</Col>
+
           </Row>
         </Grid>
       )
