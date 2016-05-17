@@ -8,19 +8,29 @@ const Error = require('./404.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
 const Header = React.createClass({
+  getInitialState(){
+    return {
+      name: "",
+      currentBalance: "",
+      hedgedPercentage: ""
+    }
+  },
+
   componentWillMount(){
-    // console.log("checking... router: ", this.context.router)
-    // console.log("checking context: ", this.context)
     console.log("checking passed props: ", this.props.details)
-    // console.log("checking currentAssetID: ", this.context.currentAssetID)
+    this.setState({
+      name: this.props.details.account.name,
+      currentBalance: this.props.details.latestBalance.toLocaleString(),
+      hedgedPercentage: this.props.details.account.hedgedPercentage.toFixed(3)
+    })
   },
 
   render(){
     return (
       <PageHeader>
-        {this.props.details.account.name}<br/>
-        <small>Current balance: ${this.props.details.latestBalance.toLocaleString()}</small><br/>
-        <small>Hedged percentage: {this.props.details.account.hedgedPercentage.toFixed(3)}%</small>
+        {this.state.name}<br/>
+        <small>Current balance: ${this.state.currentBalance}</small><br/>
+        <small>Hedged percentage: {this.state.hedgedPercentage}%</small>
       </PageHeader>
     )
   }

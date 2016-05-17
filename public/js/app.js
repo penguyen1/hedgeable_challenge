@@ -144,8 +144,7 @@ const App = React.createClass({
           
           <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab">
             <Tab eventKey={1} title="My Portfolio">
-              <PageHeader>
-                Account Portfolio<br/>
+              <PageHeader> Account Portfolio<br/>
                 <small>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
                 <small>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
               </PageHeader>
