@@ -3,6 +3,8 @@ import React from 'react'
 import { render, ReactDOM } from 'react-dom'
 import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs, Table } from 'react-bootstrap'
+var Chart = require('react-d3-core').Chart;
+var LineChart = require('react-d3-basic').LineChart;
 
 const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
@@ -63,15 +65,6 @@ const App = React.createClass({
       // console.log('getting API Partner token: ', data)
       this.setState({ token: data.response })     // API Partner authorization {token}
 
-      // // retrieves all account types
-      // $.ajax({
-      //   url: `https://api.hedgeable.com/accounttypes?token=${this.state.token}`,
-      //   type: 'GET',
-      //   dataType: 'json'
-      // }).done((data) => {
-      //   console.log('getting all account types??: ', data)
-      // })
-
       // authenticates client & gets client {usertoken}
       $.ajax({
         url: `https://api.hedgeable.com/client/login?token=${this.state.token}&email=apidemo@hedgeable.com&password=gethedged`,
@@ -122,6 +115,16 @@ const App = React.createClass({
         </div>
       )
     } else {
+      var balancesData = this.state.portfolio.balances.balances;
+      var returnsData = this.state.portfolio.balances.returns;
+      // var chartSeries = [{
+      //   field: 'BMI',
+      //   name: 'BMI',
+      //   color: '#ff7f0e'
+      // }],
+      // margins = {left:0, right:0, top:0, bottom:0},
+      // x = function(d){ return +(d.date.split('-').join('')) }
+
       return (
         <Grid>
           <Jumbotron style={{height:'205px'}}>
@@ -142,7 +145,12 @@ const App = React.createClass({
                 </Col>
                 <Col xs={8} md={5}>
                   <Tabs defaultActiveKey={1} id="growthChart-tabs">
-                    <Tab eventKey={1} title="Returns"> Growth Line Chart of Portfolio Returns </Tab>
+                    <Tab eventKey={1} title="Returns">
+                      // <Chart title="Testing123" width={600} height={300} margins={margins}>
+                      //   <LineChart showXGrid={false} showYGrid={false} margins={margins} title="Testing123"
+                      //         data={this.state.portfolio.balances.returns} width={600} height={300} chartSeries={chartSeries} x={x} />
+                      // </Chart>
+                    </Tab>
                     <Tab eventKey={2} title="Balances"> Growth Line Chart of Portfolio Balances </Tab>
                   </Tabs>
                 </Col>
@@ -161,7 +169,6 @@ const App = React.createClass({
     }
   }
 });
-
 
 render((
   <Router history={browserHistory}>
