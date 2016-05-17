@@ -25,6 +25,7 @@ const App = React.createClass({
       clientId: "",
       currentAssetID: 0,
       portfolio: {},
+      key: 1,
       loading: true
     }
   },
@@ -105,6 +106,13 @@ const App = React.createClass({
     }, 600);
   },
 
+  handleSelect(key){
+    // console.log("Viewing Account: ", key)
+    this.setState({ key: key });
+    // this.router.replace('/profile');
+    console.log('App component router: ', this.router)
+  },
+
   renderAsset(asset){
     // converts asset Cash security id 0 to 1393 
     asset.security.id < 1 ? asset.security.id = 1393 : asset.security.id;
@@ -118,7 +126,8 @@ const App = React.createClass({
   render() {
     // list of account holdings
     var holdings = [];    
-    
+    var accounts = [];
+
     if(this.state.loading){
       return (
         <div id="container-bg">
@@ -133,28 +142,21 @@ const App = React.createClass({
             <h4>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</h4>
           </PageHeader>
           <Row className="show-grid">
+            <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab">
+              <Tab eventKey={1} title="Portfolio">
+                <Col xs={10} md={7}>
+                  <Assets details={this.state.portfolio.balances.holdings} />
+                </Col>
 
-            <Col xs={10} md={7}>
-              <Table striped condensed hover responsive>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Ticker</th>
-                    <th>Quantity</th>
-                    <th>Market Value</th>
-                    <th>Portfolio percentage</th>
-                    <th>Total Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.portfolio.balances.holdings.forEach( el => holdings.push(this.renderAsset(el)) )}
-                  {holdings}
-                </tbody>
-              </Table>
-            </Col>
-
-            <Col xs={8} md={5}>accountGrowthChart here</Col>
-
+                <Col xs={8} md={5}>accountGrowthChart here</Col>
+              </Tab>
+              {this.state.portfolio.accountsInfo.map( el =>
+                <Tab eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
+                  {el.account.name}
+                </Tab> 
+              )}
+              
+            </Tabs>
           </Row>
         </Grid>
       )

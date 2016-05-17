@@ -24,20 +24,77 @@ const Assets = React.createClass({
 
   componentWillMount(){
     // console.log("checking... router: ", this.context.router)
-    console.log("checking... token: ", this.context)
-    console.log("checking... asset: ", this.props.details)
+    // console.log("checking... token: ", this.context)
+    // console.log("checking... asset: ", this.props.details)
   },
 
-  viewProfile(event){
-    event.preventDefault();
-    console.log("viewing profile of Asset id: ", this.props.details.security.id);
-    this.context.setCurrentAssetID(this.props.details.security.id);
-    // this.context.router.replace('/profile');
+  // viewProfile(event){
+  //   event.preventDefault();
+  //   console.log("viewing profile of Asset id: ", this.props.details.security.id);
+  //   // this.context.setCurrentAssetID(this.props.details.security.id);
+  //   // this.context.router.replace('/profile');
+  // },
+
+  renderAsset(asset){
+    // converts asset Cash security id 0 to 1393 
+    // asset.security.id < 1 ? asset.security.id = 1393 : asset.security.id;
+    // console.log("rendering asset id: ", asset.security.id)
+    
+    // console.log("rendering asset: ", asset)
+    return (
+      <AssetInfo key={asset.security.id} details={asset}/>
+    )
   },
 
   render(){
-    return(
-      <tr key={this.props.details.security.id} onClick={this.viewProfile}>
+    // list of assets
+    var assets = []; 
+
+    return (
+      <Table striped condensed hover responsive>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Ticker</th>
+            <th>Quantity</th>
+            <th>Market Value</th>
+            <th>Portfolio percentage</th>
+            <th>Total Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.details.map( el => this.renderAsset(el) )}
+        </tbody>
+      </Table>
+    )
+  }
+});
+
+const AssetInfo = React.createClass({
+  // context data from parent component
+  contextTypes: {
+    token: React.PropTypes.string.isRequired,
+    usertoken: React.PropTypes.string.isRequired,
+    setCurrentAssetID: React.PropTypes.func.isRequired,
+    router: React.PropTypes.object.isRequired
+  },
+
+  componentWillMount(){
+    // console.log("checking... router: ", this.context.router)
+    // console.log("checking context: ", this.context)
+    // console.log("checking passed props: ", this.props.details)
+  },
+
+  handleClick(event){
+    event.preventDefault();
+    console.log("asset security id clicked: ", this.props.details.security.id)
+    this.context.setCurrentAssetID(this.props.details.security.id);
+    this.context.router.replace('/profile');
+  },
+
+  render(){
+    return (
+      <tr key={this.props.details.security.id} onClick={this.handleClick}>
         <td>{this.props.details.security.name}</td>
         <td>{this.props.details.security.ticker}</td>
         <td>{this.props.details.shares.toFixed(2)}</td>

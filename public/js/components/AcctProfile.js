@@ -4,36 +4,35 @@ import { browserHistory, Router, Route, Link } from 'react-router'
 import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'         // any other modules???
 
 const Error = require('./404.js');
-// const Profile = require('./components/Profile.js');
 // const Assets = require('./components/Assets.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
 const Profile = React.createClass({
+  // context data from parent component
+  contextTypes: {
+    token: React.PropTypes.string.isRequired,
+    usertoken: React.PropTypes.string.isRequired,
+    currentAssetID: React.PropTypes.number,
+    setCurrentAssetID: React.PropTypes.func.isRequired,
+    router: React.PropTypes.object.isRequired
+  },
+
   getInitialState(){
     return{}
   },
 
-  // sets context from parent component
-  contextTypes: {
-    user: React.PropTypes.object,
-    router: React.PropTypes.object.isRequired,
-    setCurrentHuntId: React.PropTypes.func
+  componentWillMount(){
+    // console.log("checking... router: ", this.context.router)
+    console.log("checking context: ", this.context)
+    // console.log("checking passed props: ", this.props.details)
+    // console.log("checking currentAssetID: ", this.context.currentAssetID)
   },
-
-  componentWillMount(){},
 
   componentDidMount(){},
 
-  renderAsset(asset){
-    return(
-      <Asset key={} details={} />
-      <Hunt key={hunt.hunt_id} details={hunt} deleteHunt={this.deleteHunt}/>
-    )
-  },
-
   render(){
-    return(
-
+    return (
+      <h4>currently in Profile Component!</h4>
     )
   }
 });
