@@ -8,7 +8,7 @@ var api = new ApiDocumentation.AccountTypesApi();                             //
 var token = "token_example"; // API partner authorization token               // delete?
 
 const Error = require('./components/404.js');
-// const HoldingsTable = require('./components/HoldingsTable.js');
+const HoldingsTable = require('./components/HoldingsTable.js');
 // const ProfileInfo = require('./components/ProfileInfo.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
@@ -93,7 +93,7 @@ const App = React.createClass({
 
   render() {
     console.log('this.state: ', this.state)
-    
+
     if(this.state.loading){
       return (
         <div id="container-bg">
@@ -109,28 +109,7 @@ const App = React.createClass({
           </PageHeader>
           <Row className="show-grid">
 
-            <Col xs={9} md={6}>
-              <Table responsive>
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Ticker</th>
-                    <th>Shares</th>
-                    <th>Total Balance</th>
-                    <th>Portfolio percentage</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>Stock A</th>
-                    <th>STKA</th>
-                    <th>1,000</th>
-                    <th>$400,000</th>
-                    <th>4.5%</th>
-                  </tr>
-                </tbody>
-              </Table>
-            </Col>
+            <HoldingsTable />
 
             <Col xs={9} md={6}>accountGrowthChart here</Col>
 
@@ -145,6 +124,7 @@ const App = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
+      <Route path="/holdings" component={HoldingsTable} />
     </Route>
     <Route path="*" component={Error} />
   </Router>

@@ -15,14 +15,22 @@ const HoldingsTable = React.createClass({
 
   // sets context from parent component
   contextTypes: {
-    user: React.PropTypes.object,
+    token: React.PropTypes.string.isRequired,
+    usertoken: React.PropTypes.string.isRequired,
+    portfolio: React.PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired,
-    setCurrentHuntId: React.PropTypes.func
   },
 
-  componentWillMount(){},
+  componentWillMount(){
+    console.log("checking... token: ", this.context.token)
+    console.log("checking... usertoken: ", this.context.usertoken)
+    console.log("checking... portfolio: ", this.context.portfolio)
+    console.log("checking... router: ", this.context.router)
+  },
 
-  componentDidMount(){},
+  componentDidMount(){
+    console.log("HoldingsTable component is mounted")
+  },
 
   renderAsset(asset){
     return(
@@ -32,30 +40,32 @@ const HoldingsTable = React.createClass({
   },
 
   render(){
-    return(
-      <Col xs={9} md={6}>
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Ticker</th>
-              <th>Shares</th>
-              <th>Total Balance</th>
-              <th>Portfolio percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Stock A</th>
-              <th>STKA</th>
-              <th>1,000</th>
-              <th>$400,000</th>
-              <th>4.5%</th>
-            </tr>
-          </tbody>
-        </Table>
-      </Col>
-    )
+    // return(
+    //   <Col xs={9} md={6}>
+    //     <Table responsive>
+    //       <thead>
+    //         <tr>
+    //           <th>Title</th>
+    //           <th>Ticker</th>
+    //           <th>Shares</th>
+    //           <th>Total Balance</th>
+    //           <th>Portfolio percentage</th>
+    //         </tr>
+    //       </thead>
+    //       <tbody>
+    //         <tr>
+    //           <th>Stock A</th>
+    //           <th>STKA</th>
+    //           <th>1,000</th>
+    //           <th>$400,000</th>
+    //           <th>4.5%</th>
+    //         </tr>
+    //       </tbody>
+    //     </Table>
+    //   </Col>
+    // )
+
+    return(<div>HoldingsTable component info</div>)
   }
 });
 
