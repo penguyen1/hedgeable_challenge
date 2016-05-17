@@ -45,12 +45,12 @@ const Assets = React.createClass({
       <Table striped condensed hover responsive>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Ticker</th>
-            <th>Quantity</th>
-            <th>Market Value</th>
-            <th>Portfolio percentage</th>
-            <th>Total Value</th>
+            <th style={{textAlign:'center'}}>Name</th>
+            <th style={{textAlign:'center'}}>Ticker</th>
+            <th style={{textAlign:'center'}}>Quantity</th>
+            <th style={{textAlign:'center'}}>Market Value</th>
+            <th style={{textAlign:'center'}}>Portfolio percentage</th>
+            <th style={{textAlign:'center'}}>Total</th>
           </tr>
         </thead>
         <tbody>

@@ -137,16 +137,16 @@ const App = React.createClass({
     } else {
       return (
         <Grid>
-          <Jumbotron>
-            <h1>Hello, {this.state.portfolio.client.firstName}!</h1>
+          <Jumbotron style={{height:'205px'}}>
+            <h1 style={{marginTop:'-10px'}}>Hello, {this.state.portfolio.client.firstName}!</h1>
             <p>For more details, click on the tabs or list of assets below!</p>
           </Jumbotron>
           
           <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab">
             <Tab eventKey={1} title="My Portfolio">
               <PageHeader> Account Portfolio<br/>
-                <small>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
-                <small>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
+                <small style={{fontSize:'21px'}}>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
+                <small style={{fontSize:'21px'}}>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
               </PageHeader>
             
               <Row className="show-grid">

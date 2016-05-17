@@ -29,8 +29,8 @@ const Header = React.createClass({
     return (
       <PageHeader>
         Account: {this.state.name}<br/>
-        <small>Current balance: ${this.state.currentBalance}</small><br/>
-        <small>Hedged percentage: {this.state.hedgedPercentage}%</small>
+        <small style={{fontSize:'21px'}}>Current balance: ${this.state.currentBalance}</small><br/>
+        <small style={{fontSize:'21px'}}>Hedged percentage: {this.state.hedgedPercentage}%</small>
       </PageHeader>
     )
   }
