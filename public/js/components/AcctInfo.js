@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { browserHistory, Router, Route, Link } from 'react-router'
-import { Col, Row } from 'react-bootstrap'         // any other modules???
+import { Col, Row, Tab, Tabs } from 'react-bootstrap'         // any other modules???
 
 const Error = require('./404.js');
 const Assets = require('./Assets.js');
@@ -27,7 +27,7 @@ const AcctInfo = React.createClass({
 
   componentWillMount(){
     // console.log("checking context: ", this.context)
-    console.log("checking passed props: ", this.props.details)
+    // console.log("checking AcctInfo props: ", this.props.details)
     this.setState({
       firstDate: this.props.details.stats.firstDate,
       lastDate: this.props.details.stats.lastDate,
@@ -40,7 +40,13 @@ const AcctInfo = React.createClass({
         <Col xs={10} md={7}>
           <Assets details={this.props.details.holdings} />
         </Col>
-        <Col xs={8} md={5}>accountGrowthChart here</Col>
+        <Col xs={8} md={5}>
+          <Tabs defaultActiveKey={1} id="growthChart-tabs">
+            <Tab eventKey={1} title="Returns"> Growth Line Chart of Account Returns </Tab>
+            <Tab eventKey={2} title="Balances"> Growth Line Chart of Account Balances </Tab>
+            <Tab eventKey={3} title="Transactions"> Date Picker for Account Transactions </Tab>
+          </Tabs>
+        </Col>
       </Row>
     )
   }

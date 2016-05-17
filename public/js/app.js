@@ -26,7 +26,6 @@ const App = React.createClass({
       clientId: "",
       currentAssetID: 0,
       portfolio: {},
-      key: 1,
       loading: true
     }
   },
@@ -107,24 +106,12 @@ const App = React.createClass({
     }, 600);
   },
 
-  handleSelect(key){
-    // console.log("Viewing Account: ", key)
-    this.setState({ key: key });
-    // this.router.replace('/acctInfo');
-    // replace({
-    //   pathname: '/acctInfo',
-    //   state: { nextPathname: nextState.location.pathname }
-    // })
-  },
-
   renderAsset(asset){
     // converts asset Cash security id 0 to 1393 
     asset.security.id < 1 ? asset.security.id = 1393 : asset.security.id;
     // console.log("rendering asset id: ", asset.security.id)
     
-    return(
-      <Assets key={asset.security.id} details={asset}/>
-    )
+    return <Assets key={asset.security.id} details={asset}/>
   },
 
   render() {
@@ -142,7 +129,7 @@ const App = React.createClass({
             <p>For more details, click on the tabs or list of assets below!</p>
           </Jumbotron>
           
-          <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab">
+          <Tabs defaultActiveKey={1} id="account-tabs">
             <Tab eventKey={1} title="My Portfolio">
               <PageHeader> Account Portfolio<br/>
                 <small style={{fontSize:'21px'}}>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
@@ -153,8 +140,14 @@ const App = React.createClass({
                 <Col xs={10} md={7}>
                   <Assets details={this.state.portfolio.balances.holdings} />
                 </Col>
-                <Col xs={8} md={5}>accountGrowthChart here</Col>
-              </Row>
+                <Col xs={8} md={5}>
+                  <Tabs defaultActiveKey={1} id="growthChart-tabs">
+                    <Tab eventKey={1} title="Returns"> Growth Line Chart of Portfolio Returns </Tab>
+                    <Tab eventKey={2} title="Balances"> Growth Line Chart of Portfolio Balances </Tab>
+                  </Tabs>
+                </Col>
+              </Row>              
+              {/* <AcctInfo details={this.state.portfolio.balances} /> */}
             </Tab>
 
             {this.state.portfolio.accountsInfo.map( el =>

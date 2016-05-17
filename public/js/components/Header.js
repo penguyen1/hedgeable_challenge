@@ -17,7 +17,7 @@ const Header = React.createClass({
   },
 
   componentWillMount(){
-    console.log("checking passed props: ", this.props.details)
+    // console.log("checking Header props: ", this.props.details)
     this.setState({
       name: this.props.details.account.name,
       currentBalance: this.props.details.latestBalance.toLocaleString(),
