@@ -153,7 +153,7 @@ const App = React.createClass({
                   <Tabs defaultActiveKey={1} id="growthChart-tabs">
                     <Tab eventKey={1} title="Returns">
                       {/* Growth Line Chart of Portfolio Returns */}
-                      <ChartTest />
+                      <ChartTest details={this.state.portfolio.balances.returns} title="Growth Chart of Returns" />
                     </Tab>
                     <Tab eventKey={2} title="Balances"> Growth Line Chart of Portfolio Balances </Tab>
                   </Tabs>
@@ -162,7 +162,7 @@ const App = React.createClass({
             </Tab>
 
             {this.state.portfolio.accountsInfo.map( el =>
-              <Tab eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
+              <Tab key={el.account.id} eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
                 <Header details={el} />
                 <AcctInfo details={el.balances} />
               </Tab> 
