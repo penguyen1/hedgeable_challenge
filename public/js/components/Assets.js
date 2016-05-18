@@ -1,34 +1,22 @@
 'use strict'
 import React from 'react'
 import { browserHistory, Router, Route, Link } from 'react-router'
-import { Collapse, Panel, Table, Well } from 'react-bootstrap'         // any other modules???
+import { Table } from 'react-bootstrap'         // any other modules???
 
 // Components
-const AssetProfile = require('./AssetProfile.js');
+// const AssetProfile = require('./AssetProfile.js');
 
 // Displays all asset investments of User's Portfolio & Accounts
 const Assets = React.createClass({
-  // contextTypes: {
-  //   router: React.PropTypes.object.isRequired
-  // },
-
-  // viewProile(event) {
-  //   event.preventDefault();
-  //   this.context.router.replace('/assetProfile');
-  // },
-
   componentWillMount() {
-    // var routes = Router.getCurrentRoutes()
-    // console.log('Assets - currentRoutes', routes)
-    // console.log('Assets - currentRoutes', routes)
+    console.log('Assets - current props: ', this.props);
   },
 
   renderAsset(asset) {
     // changes Cash securityID from 0 to 1393 
-    asset.security.id = (asset.security.id < 1 ? 1393 : asset.security.id);
-    // console.log("checking asset id: ", asset.security.id)
+    // asset.security.id = (asset.security.id < 1 ? 1393 : asset.security.id);
     // console.log("rendering asset: ", asset)
-    return <AssetInfo key={asset.security.id} details={asset} date={this.props.date} viewProile={this.viewProile} />
+    return <AssetInfo key={asset.security.id} details={asset} date={this.props.date} acctID={this.props.id} />
   },
 
   render() {
@@ -51,36 +39,32 @@ const Assets = React.createClass({
   }
 });
 
-
 // Asset investment information (per table row)
 const AssetInfo = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired,
     setCurrentSecurityID: React.PropTypes.func,
-    setStartDate: React.PropTypes.func
+    setStartDate: React.PropTypes.func,
+    setAcctID: React.PropTypes.func
   },
-
-  // getInitialState() {
-  //   return {}
-  //   // open: false    // for collapsible Transactions
-  // },
 
   handleClick(event) {
     event.preventDefault();
+
+    // saves asset accountID, securityID and startDate to this.context
     this.context.setCurrentSecurityID(this.props.details.security.id);
     this.context.setStartDate(this.props.date);
+    this.context.setAcctID(this.props.acctID);
     console.log("rendering profile of securityID: ", this.props.details.security.id);
     console.log("storing new startDate: ", this.props.date);
-    // console.log("asset clicked: ", this.props.details)      // ajax + this.context.currentSecurityID
-    
-    console.log('omw to AssetProfile! ', this.context.router)
+    console.log("storing Account ID: ", this.props.acctID);
+
+    // redirects to AssetProfile component
     this.context.router.replace('/assetProfile');
-    // this.setState({ open: !this.state.open });      // toggles collapsible panel for Transactions data
   },
 
   render() {
     var pricePerShare = this.props.details.amount/this.props.details.shares;
-    // console.log('this.props: ', this.props)
     return (
       <tr key={this.props.details.security.id} onClick={this.handleClick}>
         <td>{this.props.details.security.name}</td>
@@ -96,35 +80,4 @@ const AssetInfo = React.createClass({
 module.exports = Assets;
 
 
-// const CollapsibleInfo = React.createClass({
-//   getInitialState() {
-//     return {
-//       open: false
-//     }
-//   },
-// 
-//   handleClick(event) {
-//     event.preventDefault();
-//     console.log("asset security id clicked: ", this.props.details.security.id)
-//     // this.context.setCurrentSecurityID(this.props.details.security.id);
-//     // this.context.router.replace('/assetProfile');
-// 
-//     this.setState({ open: !this.state.open });
-//   },
-// 
-//   render() {
-//     return (
-//       <tr key={this.props.details.security.id} onClick={this.handleClick}>
-//         <td colSpan="5">
-//           <Collapse in={this.state.open}>
-//             <div>
-//               <Well>
-//                 Hello!
-//               </Well>
-//             </div>
-//           </Collapse>
-//         </td>
-//       </tr>
-//     )
-//   }
-// });
+

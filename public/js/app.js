@@ -21,9 +21,9 @@ const App = React.createClass({
       token: "",
       usertoken: "",
       clientID: 0,    
-      currentSecurityID: 0,   
-      startDate: "",  
-      portfolio: {},
+      accountID: 1,
+      currentSecurityID: 0,
+      startDate: "",
       loading: true
     }
   },
@@ -33,6 +33,8 @@ const App = React.createClass({
     token: React.PropTypes.string,
     usertoken: React.PropTypes.string,
     clientID: React.PropTypes.number,
+    accountID: React.PropTypes.number,
+    setAcctID: React.PropTypes.func,
     currentSecurityID: React.PropTypes.number,
     setCurrentSecurityID: React.PropTypes.func,
     startDate: React.PropTypes.string,
@@ -44,6 +46,8 @@ const App = React.createClass({
       token: this.state.token,
       usertoken: this.state.usertoken,
       clientID: this.state.clientID,
+      accountID: this.state.accountID,
+      setAcctID: this.setAcctID,
       currentSecurityID: this.state.currentSecurityID,
       setCurrentSecurityID: this.setCurrentSecurityID,
       startDate: this.state.startDate,
@@ -53,16 +57,17 @@ const App = React.createClass({
 
   setCurrentSecurityID(id) { 
     this.setState({ currentSecurityID: id }, 
-      function(){ 
-        console.log('updated new securityID ', this.state) 
-      });
+      function(){ console.log('updated new securityID', this.state) })
   },
 
   setStartDate(date) { 
     this.setState({ startDate: date },
-      function(){
-        console.log('updated new startDate ', this.state)
-      });
+      function(){console.log('updated new startDate', this.state) })
+  },
+
+  setAcctID(id) { 
+    this.setState({ accountID: id },
+      function(){console.log('updated new accountID', this.state) })
   },
 
   componentWillMount() {
@@ -102,7 +107,7 @@ const App = React.createClass({
     if(this.state.loading){
       return (
         <div id="container-bg">
-          <h3>Loading...</h3>
+          <h3 style={{marginTop:'200px'}}>Hello Handsome!...</h3>
         </div>
       )
     } else {
@@ -114,7 +119,6 @@ const App = React.createClass({
     }
   }
 });
-
 
 render((
   <Router history={browserHistory}>

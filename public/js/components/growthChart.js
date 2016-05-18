@@ -2,7 +2,7 @@
 import React from 'react'
 import rd3 from 'rd3';
 const LineChart = rd3.LineChart;
-const AreaChart = rd3.AreaChart;
+// const AreaChart = rd3.AreaChart;
 
 // Displays Investment Growth of Asset returns|balances|transactions (over time)
 var GrowthChart = React.createClass({
