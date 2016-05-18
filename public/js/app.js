@@ -9,6 +9,7 @@ const Error = require('./components/404.js');
 const Assets = require('./components/Assets.js');
 const AcctInfo = require('./components/AcctInfo.js');
 const Header = require('./components/Header.js');
+const Home = require('./components/Home.js');
 const GrowthChart = require('./components/GrowthChart.js');
 const AssetProfile = require('./components/AssetProfile.js');
 const baseURL = "https://api.hedgeable.com";    // base Hedgeable API URL
