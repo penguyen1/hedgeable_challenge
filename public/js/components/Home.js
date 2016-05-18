@@ -57,12 +57,12 @@ const Home = React.createClass({
     if(this.state.loading){
       return (
         <div id="container-bg">
-          <h3 style={{marginTop:'200px'}}>Hello Handsome!...</h3>
+          <h1 style={{marginTop:'200px'}}>Hello Handsome!...</h1>
         </div>
       )
     } else {
       return (
-        <Grid>
+        <div>
           <Jumbotron style={{height:'205px'}}>
             <h1 style={{marginTop:'-10px'}}> Hello again, {this.state.name}! </h1>
             <p>For more details, click on the tabs or list of assets below!</p>
@@ -84,7 +84,7 @@ const Home = React.createClass({
               </Tab> 
             )}
           </Tabs>
-        </Grid>
+        </div>
       )
     }
   }

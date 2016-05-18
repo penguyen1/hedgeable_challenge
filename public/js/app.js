@@ -107,7 +107,7 @@ const App = React.createClass({
     if(this.state.loading){
       return (
         <div id="container-bg">
-          <h3 style={{marginTop:'200px'}}>Hello Handsome!...</h3>
+          <h1 style={{marginTop:'200px'}}>Hello Handsome!...</h1>
         </div>
       )
     } else {
