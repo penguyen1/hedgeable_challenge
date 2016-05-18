@@ -20,8 +20,10 @@ const App = React.createClass({
     return {
       token: "",
       usertoken: "",
-      clientId: "",
-      currentAssetID: 0,
+      clientID: 0,
+      currentAcctID: 1,        
+      currentSecurityID: 0,
+      firstDate: "",       
       portfolio: {},
       loading: true
     }
@@ -31,23 +33,39 @@ const App = React.createClass({
   childContextTypes: {
     token: React.PropTypes.string,
     usertoken: React.PropTypes.string,
-    currentAssetID: React.PropTypes.number,
-    setCurrentAssetID: React.PropTypes.func,
-    portfolio: React.PropTypes.object
+    clientID: React.PropTypes.number,
+    currentAcctID: React.PropTypes.number,
+    setCurrentAcctID: React.PropTypes.func,
+    currentSecurityID: React.PropTypes.number,
+    setCurrentSecurityID: React.PropTypes.func,
+    firstDate: React.PropTypes.string,
+    setFirstDate: React.PropTypes.func    
   },
 
   getChildContext() {
     return {
       token: this.state.token,
       usertoken: this.state.usertoken,
-      currentAssetID: this.state.currentAssetID,
-      setCurrentAssetID: this.setCurrentAssetID,
-      portfolio: this.state.portfolio
+      clientID: this.state.clientID,
+      currentAcctID: this.state.currentAcctID,
+      setCurrentAcctID: this.setCurrentAcctID,
+      currentSecurityID: this.state.currentSecurityID,
+      setCurrentSecurityID: this.setCurrentSecurityID,
+      firstDate: this.state.firstDate,
+      setFirstDate: this.setFirstDate
     }
   },
 
-  setCurrentAssetID(id) { 
-   this.setState({ currentAssetID: id })
+  setCurrentAcctID(id) { 
+   this.setState({ currentAcctID: id })
+  },
+
+  setCurrentSecurityID(id) { 
+   this.setState({ currentSecurityID: id })
+  },
+
+  setFirstDate(str) { 
+   this.setState({ firstDate: str })
   },
 
   componentWillMount() {
@@ -69,17 +87,20 @@ const App = React.createClass({
         // console.log('Client {usertoken}: ', data.response)   
         this.setState({ 
           usertoken: data.response.token,   // client {usertoken}
-          clientId: data.response.id        // clientId 
+          clientID: data.response.id        // clientID 
         }); 
 
         // gets ALL client portfolio & account info & investments
         $.ajax({
-          url: `${baseURL}/client/${this.state.clientId}/getallinformation?token=${this.state.token}&usertoken=${this.state.usertoken}`,
+          url: `${baseURL}/client/${this.state.clientID}/getallinformation?token=${this.state.token}&usertoken=${this.state.usertoken}`,
           type: 'GET',
           dataType: 'json'
         }).done((data) => {
           // console.log('Entire client portfolio: ', data.response)
-          this.setState({ portfolio: data.response })
+          this.setState({ 
+            portfolio: data.response,       // entire portfolio + accounts
+            firstDate: data.response.balances.stats.firstDate // firstDate of portfolio
+          });
           console.log('this.state: ', this.state)
         });
       });
@@ -92,6 +113,11 @@ const App = React.createClass({
     setTimeout(() => {
       self.setState({ loading: false })       
     }, 1000);
+  },
+
+  // updates currentAcctID when user navigates btw account tabs
+  handleSelect(key) {
+    this.setState({ currentAcctID: key });
   },
 
   render() {
@@ -109,13 +135,13 @@ const App = React.createClass({
             <p>For more details, click on the tabs or list of assets below!</p>
           </Jumbotron>
           
-          <Tabs defaultActiveKey={1} animation={false} id="account-tabs">
+          <Tabs activeKey={this.state.currentAcctID} animation={false} onSelect={this.handleSelect} id="account-tabs">
             <Tab eventKey={1} title="My Portfolio">
               <PageHeader> Account Portfolio<br/>
                 <small style={{fontSize:'20px'}}>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
                 <small style={{fontSize:'20px'}}>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
               </PageHeader>
-              <AcctInfo details={this.state.portfolio.balances} records={} />       
+              <AcctInfo details={this.state.portfolio.balances} records={null} />       
             </Tab>
 
             {this.state.portfolio.accountsInfo.map((el) =>

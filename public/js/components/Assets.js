@@ -8,32 +8,12 @@ import { Collapse, Panel, Table, Well } from 'react-bootstrap'         // any ot
 
 // Displays all asset investments of User's Portfolio & Accounts
 const Assets = React.createClass({
-  // context data from parent component
-  // contextTypes: {
-  //   token: React.PropTypes.string.isRequired,
-  //   usertoken: React.PropTypes.string.isRequired,
-  //   setCurrentAssetID: React.PropTypes.func.isRequired,
-  //   router: React.PropTypes.object.isRequired
-  // },
-
-  // componentWillMount() {
-    // console.log("checking... token: ", this.context)
-    // console.log("checking... asset: ", this.props.details)
-  // },
-
-  // viewProfile(event) {
-  //   event.preventDefault();
-  //   console.log("viewing profile of Asset id: ", this.props.details.security.id);
-  //   // this.context.setCurrentAssetID(this.props.details.security.id);
-  //   // this.context.router.replace('/profile');
-  // },
-
   renderAsset(asset) {
     // changes Cash securityID from 0 to 1393 
     asset.security.id = (asset.security.id < 1 ? 1393 : asset.security.id);
     // console.log("checking asset id: ", asset.security.id)
     // console.log("rendering asset: ", asset)
-    return <AssetInfo key={asset.security.id} details={asset}/>
+    return <AssetInfo key={asset.security.id} details={asset} date={this.props.date} />
   },
 
   render() {
@@ -59,14 +39,17 @@ const Assets = React.createClass({
 
 // Asset investment information (per table row)
 const AssetInfo = React.createClass({
-  // contextTypes: {
-  //   setCurrentAssetID: React.PropTypes.func.isRequired,
-  //   router: React.PropTypes.object.isRequired
-  // },
+  contextTypes: {
+    router: React.PropTypes.object.isRequired,
+    token: React.PropTypes.string.isRequired,
+    usertoken: React.PropTypes.string.isRequired,
+    currentSecurityID: React.PropTypes.number.isRequired,
+    setCurrentSecurityID: React.PropTypes.func.isRequired
+  },
 
   getInitialState() {
     return {
-      open: false
+      // open: false    // for collapsible Transactions
     }
   },
 
@@ -78,13 +61,17 @@ const AssetInfo = React.createClass({
   handleClick(event) {
     event.preventDefault();
     console.log("asset securityID clicked: ", this.props.details.security.id)
-    // this.context.setCurrentAssetID(this.props.details.security.id);
+    console.log("asset clicked: ", this.props.details)
+    console.log("passing start & end dates: ", this.props.date)
+    console.log("checking context router: ", this.context.router)
     // this.context.router.replace('/assetProfile');
-    this.setState({ open: !this.state.open });      // toggles collapsible panel of AssetProfile info
+
+    // this.setState({ open: !this.state.open });      // toggles collapsible panel for Transactions data
   },
 
   render() {
     var pricePerShare = this.props.details.amount/this.props.details.shares;
+    console.log('this.props: ', this.props)
     return (
       <tr key={this.props.details.security.id} onClick={this.handleClick}>
         <td>{this.props.details.security.name}</td>
@@ -110,7 +97,7 @@ module.exports = Assets;
 //   handleClick(event) {
 //     event.preventDefault();
 //     console.log("asset security id clicked: ", this.props.details.security.id)
-//     // this.context.setCurrentAssetID(this.props.details.security.id);
+//     // this.context.setCurrentSecurityID(this.props.details.security.id);
 //     // this.context.router.replace('/assetProfile');
 // 
 //     this.setState({ open: !this.state.open });

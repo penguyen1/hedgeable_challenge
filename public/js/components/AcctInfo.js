@@ -8,31 +8,9 @@ const GrowthChart = require('./GrowthChart.js');    // growth chart of balances|
 
 // Displays Portfolio|Account Assets(table) & Investment Growth(line graph) 
 const AcctInfo = React.createClass({
-  // context data from parent component
-  // contextTypes: {
-  //   token: React.PropTypes.string.isRequired,
-  //   usertoken: React.PropTypes.string.isRequired,
-  //   currentAssetID: React.PropTypes.number,
-  //   setCurrentAssetID: React.PropTypes.func.isRequired,
-  //   router: React.PropTypes.object.isRequired
-  // },
-
-  getInitialState() {
-    return {
-      firstDate: "",
-      lastDate: ""
-    }
-  },
-
-  componentWillMount() {
-    this.setState({
-      firstDate: this.props.details.stats.firstDate,
-      lastDate: this.props.details.stats.lastDate,
-    });
-  },
-
   renderTransactions(transactions) {
-    console.log('rendering transactions: ', transactions)
+    // console.log('rendering transactions: ', transactions)        // works!
+
     // renders list of collapsible items
     // return (
     //   <Tab eventKey={3} title="Transactions"> 
@@ -45,7 +23,7 @@ const AcctInfo = React.createClass({
     return (
       <Row className="show-grid">
         <Col xs={9} md={6}>
-          <Assets details={this.props.details.holdings} />
+          <Assets details={this.props.details.holdings} date={this.props.details.stats.firstDate} />
         </Col>
         <Col xs={9} md={6}>
           <Tabs defaultActiveKey={1} animation={false} id="growthChart-tabs">
