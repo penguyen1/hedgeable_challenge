@@ -10,7 +10,7 @@ const Assets = require('./components/Assets.js');
 const AcctInfo = require('./components/AcctInfo.js');
 const Header = require('./components/Header.js');
 const GrowthChart = require('./components/GrowthChart.js');
-// const AssetProfile = require('./components/AssetProfile.js');
+const AssetProfile = require('./components/AssetProfile.js');
 const baseURL = "https://api.hedgeable.com";    // base Hedgeable API URL
 
 // Root Component
@@ -149,12 +149,13 @@ const App = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
+      <Route path="/acctInfo" component={AcctInfo}/>
+      <Route path="/assetProfile" component={AssetProfile}/>
+      <Route path="/assets" component={Assets}/>
+      <Route path="/growthChart" component={GrowthChart}/>
+      <Route path="/header" component={Header}/>
     </Route>
     <Route path="*" component={Error}/>
   </Router>
 ), document.getElementById('container'));
 
-      // <Route path="/acctInfo" component={AcctInfo}/>
-      // <Route path="/assets" component={Assets}/>
-      // <Route path="/growthChart" component={GrowthChart}/>
-      // <Route path="/header" component={Header}/>

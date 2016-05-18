@@ -4,16 +4,25 @@ import { Router, Route, Link } from 'react-router'
 import { Collapse, Panel, Table, Well } from 'react-bootstrap'         // any other modules???
 
 // Components
-// const AssetProfile = require('./AssetProfile.js');
+const AssetProfile = require('./AssetProfile.js');
 
 // Displays all asset investments of User's Portfolio & Accounts
 const Assets = React.createClass({
+  // contextTypes: {
+  //   router: React.PropTypes.object.isRequired
+  // },
+
+  // viewProile(event) {
+  //   event.preventDefault();
+  //   this.context.router.replace('/assetProfile');
+  // },
+
   renderAsset(asset) {
     // changes Cash securityID from 0 to 1393 
     asset.security.id = (asset.security.id < 1 ? 1393 : asset.security.id);
     // console.log("checking asset id: ", asset.security.id)
     // console.log("rendering asset: ", asset)
-    return <AssetInfo key={asset.security.id} details={asset} date={this.props.date} />
+    return <AssetInfo key={asset.security.id} details={asset} date={this.props.date} viewProile={this.viewProile} />
   },
 
   render() {
@@ -45,26 +54,21 @@ const AssetInfo = React.createClass({
     setStartDate: React.PropTypes.func
   },
 
-  getInitialState() {
-    return {
-      // open: false    // for collapsible Transactions
-    }
-  },
-
-  // componentWillMount() {
-  //   // console.log("checking context: ", this.context)
-  //   console.log("checking passed props: ", this.props)
+  // getInitialState() {
+  //   return {}
+  //   // open: false    // for collapsible Transactions
   // },
 
   handleClick(event) {
     event.preventDefault();
     this.context.setCurrentSecurityID(this.props.details.security.id);
-    console.log("rendering profile of securityID: ", this.props.details.security.id);
     this.context.setStartDate(this.props.date);
+    console.log("rendering profile of securityID: ", this.props.details.security.id);
     console.log("storing new startDate: ", this.props.date);
     // console.log("asset clicked: ", this.props.details)      // ajax + this.context.currentSecurityID
-
-    // this.context.router.replace('/assetProfile');
+    
+    console.log('omw to AssetProfile! ', this.context.router)
+    this.context.router.replace('/assetProfile');
     // this.setState({ open: !this.state.open });      // toggles collapsible panel for Transactions data
   },
 
