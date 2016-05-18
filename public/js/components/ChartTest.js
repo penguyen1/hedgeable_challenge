@@ -18,9 +18,8 @@ var lineData = [{
 var ChartTest = React.createClass({
   getInitialState(){
     return {
-      data: [],
-      startDate: "",
-      lastDate: "",
+      name: "",
+      values: [],
       loading: true
     }
   },
@@ -46,7 +45,8 @@ var ChartTest = React.createClass({
     // console.log('new props: ', arrayOfArrays)
 
     this.setState({
-      data: arrayOfArrays
+      name: this.props.title,
+      values: this.props.details
     })
   },
 
@@ -70,27 +70,43 @@ var ChartTest = React.createClass({
     //     </div>
     //   )
     // } else {
-      console.log('this.state: ', this.state.data)
+
+      var arrayOfObjs = this.state.values.map(el => {
+        var info = {}
+        info['x'] = Date.parse(el.date)
+        info['y'] = el.value
+        return info
+      })
+
+      console.log('this.state: ', this.state)
+      var chartData = []
+      var data = {}
+      data.name = this.state.name
+      data.values = arrayOfObjs
+      chartData.push(data)
+      console.log('chartData: ', chartData)
+      
       return (
-        <AreaChart
-          data={this.state.data}
+        <LineChart
+          data={chartData}
           width="100%"
+          height={400}
           viewBoxObject={{
             x: 0,
             y: 0,
             height: 400,
             width: 500
           }}
-          height={400}
-          title="Area Chart"
-          xAxisTickInterval={{unit: 'year', interval: 2}}
-          xAxisLabel="Year"
-          yAxisLabel="Share Price"
+          title={this.state.name}
+          xAxisTickInterval={{unit: 'year', interval: 1}}
+          xAxisLabel="Date (Years)"
+          yAxisLabel={this.props.yAxis}
           xAccessor={(d)=> {
-              return new Date(d[0]);
-            }
-          }
-          yAccessor={(d)=>d[1]} />
+            {/* AreaChart: return new Date(d.date); */}
+            return d.x
+          }}
+          yAccessor={(d)=>d.y} 
+          gridHorizontal={true} />
       )
     // }
   }

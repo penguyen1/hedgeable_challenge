@@ -153,7 +153,7 @@ const App = React.createClass({
                   <Tabs defaultActiveKey={1} id="growthChart-tabs">
                     <Tab eventKey={1} title="Returns">
                       {/* Growth Line Chart of Portfolio Returns */}
-                      <ChartTest details={this.state.portfolio.balances.returns} title="Growth Chart of Returns" />
+                      <ChartTest details={this.state.portfolio.balances.returns} title="Growth Chart of Returns" yAxis="Value(%)" />
                     </Tab>
                     <Tab eventKey={2} title="Balances"> Growth Line Chart of Portfolio Balances </Tab>
                   </Tabs>
