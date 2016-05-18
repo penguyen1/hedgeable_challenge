@@ -1,7 +1,6 @@
 'use strict'
 import React from 'react'
-import { browserHistory, IndexRoute, Router, Route, Link } from 'react-router'
-import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs } from 'react-bootstrap'
+import { Grid, Jumbotron, PageHeader, Tab, Tabs } from 'react-bootstrap'
 
 // Components
 const AcctInfo = require('./AcctInfo.js');
@@ -13,11 +12,7 @@ const Home = React.createClass({
   contextTypes: {
     token: React.PropTypes.string,
     usertoken: React.PropTypes.string,
-    clientID: React.PropTypes.number,
-    currentSecurityID: React.PropTypes.number,
-    setCurrentSecurityID: React.PropTypes.func,
-    startDate: React.PropTypes.string,
-    setStartDate: React.PropTypes.func   
+    clientID: React.PropTypes.number
   },
 
   getInitialState() {
@@ -31,8 +26,6 @@ const Home = React.createClass({
     console.log('token: ', this.context.token)
     console.log('usertoken: ', this.context.usertoken)
     console.log('clientID: ', this.context.clientID)
-    console.log('currentSecurityID: ', this.context.currentSecurityID)
-    console.log('startDate: ', this.context.startDate)
 
     // gets ALL client portfolio & account info & investments
     $.ajax({
@@ -67,7 +60,7 @@ const Home = React.createClass({
       return (
         <Grid>
           <Jumbotron style={{height:'205px'}}>
-            <h1 style={{marginTop:'-10px'}}> Hello, {this.state.portfolio.client.firstName}! </h1>
+            <h1 style={{marginTop:'-10px'}}> Hello again, {this.state.portfolio.client.firstName}! </h1>
             <p>For more details, click on the tabs or list of assets below!</p>
           </Jumbotron>
           

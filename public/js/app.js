@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
-import { browserHistory, IndexRoute, Router, Route, Link } from 'react-router'
+import { browserHistory, IndexRedirect, Router, Route, Link } from 'react-router'
 import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs } from 'react-bootstrap'
 
 // Components
@@ -86,17 +86,6 @@ const App = React.createClass({
           usertoken: data.response.token,   // client {usertoken}
           clientID: data.response.id        // clientID 
         }); 
-
-        // gets ALL client portfolio & account info & investments
-        $.ajax({
-          url: `${baseURL}/client/${this.state.clientID}/getallinformation?token=${this.state.token}&usertoken=${this.state.usertoken}`,
-          type: 'GET',
-          dataType: 'json'
-        }).done((data) => {
-          // console.log('Entire client portfolio: ', data.response)
-          this.setState({ portfolio: data.response });
-          console.log('this.state: ', this.state)
-        });
       });
     });
   },
@@ -110,11 +99,19 @@ const App = React.createClass({
   },
 
   render() {
-    return (
-      <div id="container-bg">
-        {this.props.children}
-      </div>
-    )
+    if(this.state.loading){
+      return (
+        <div id="container-bg">
+          <h3>Loading...</h3>
+        </div>
+      )
+    } else {
+      return (
+        <div id="container-bg">
+          {this.props.children || <Home />}
+        </div>
+      )
+    }
   }
 });
 
@@ -122,12 +119,12 @@ const App = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
-      <Route path="/assetProfile" component={AssetProfile} />
-      <Route path="/acctInfo" component={AcctInfo} />
-      <Route path="/assets" component={Assets} />
-      <Route path="/growthChart" component={GrowthChart} />
-      <Route path="/header" component={Header} />
+      <Route path="home" component={Home} />
+      <Route path="assetProfile" component={AssetProfile} />
+      <Route path="acctInfo" component={AcctInfo} />
+      <Route path="assets" component={Assets} />
+      <Route path="growthChart" component={GrowthChart} />
+      <Route path="header" component={Header} />
     </Route>
     <Route path="*" component={Error} />
   </Router>

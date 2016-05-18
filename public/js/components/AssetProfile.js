@@ -28,7 +28,6 @@ const AssetProfile = React.createClass({
   // componentDidMount() {},
 
   render() {
-    console.log("currently in AssetProfile!!")
     return (
       <Jumbotron>
         <h1>Hello from within AssetProfile Component!!</h1>
