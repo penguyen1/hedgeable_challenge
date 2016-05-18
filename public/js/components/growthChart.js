@@ -52,7 +52,7 @@ var GrowthChart = React.createClass({
           x: 0,
           y: 0,
           height: 400,
-          width: 500
+          width: 700
         }}
         title={this.state.name}
         xAxisTickInterval={{unit: 'year', interval: 2}}

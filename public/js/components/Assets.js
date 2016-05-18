@@ -9,7 +9,7 @@ import { Table } from 'react-bootstrap'         // any other modules???
 // Displays all asset investments of User's Portfolio & Accounts
 const Assets = React.createClass({
   componentWillMount() {
-    console.log('Assets - current props: ', this.props);
+    // console.log('Assets - current props: ', this.props);
   },
 
   renderAsset(asset) {

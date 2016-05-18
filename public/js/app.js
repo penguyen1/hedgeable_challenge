@@ -56,18 +56,15 @@ const App = React.createClass({
   },
 
   setCurrentSecurityID(id) { 
-    this.setState({ currentSecurityID: id }, 
-      function(){ console.log('updated new securityID', this.state) })
+    this.setState({ currentSecurityID: id })
   },
 
   setStartDate(date) { 
-    this.setState({ startDate: date },
-      function(){console.log('updated new startDate', this.state) })
+    this.setState({ startDate: date })
   },
 
   setAcctID(id) { 
-    this.setState({ accountID: id },
-      function(){console.log('updated new accountID', this.state) })
+    this.setState({ accountID: id })
   },
 
   componentWillMount() {
@@ -107,7 +104,7 @@ const App = React.createClass({
     if(this.state.loading){
       return (
         <div id="container-bg">
-          <h1 style={{marginTop:'200px'}}>Hello Handsome!...</h1>
+          <h1 style={{marginTop:'200px'}}>Hello Handsome!</h1>
         </div>
       )
     } else {
@@ -123,12 +120,12 @@ const App = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="home" component={Home} />
-      <Route path="assetProfile" component={AssetProfile} />
-      <Route path="acctInfo" component={AcctInfo} />
-      <Route path="assets" component={Assets} />
-      <Route path="growthChart" component={GrowthChart} />
-      <Route path="header" component={Header} />
+      <Route path="/home" component={Home} />
+      <Route path="/assetProfile" component={AssetProfile} />
+      <Route path="/acctInfo" component={AcctInfo} />
+      <Route path="/assets" component={Assets} />
+      <Route path="/growthChart" component={GrowthChart} />
+      <Route path="/header" component={Header} />
     </Route>
     <Route path="*" component={Error} />
   </Router>
