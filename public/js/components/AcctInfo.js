@@ -31,6 +31,16 @@ const AcctInfo = React.createClass({
     });
   },
 
+  renderTransactions(transactions) {
+    console.log('rendering transactions: ', transactions)
+    // renders list of collapsible items
+    // return (
+    //   <Tab eventKey={3} title="Transactions"> 
+    //     Date Picker module for record list of Account Transactions 
+    //   </Tab>
+    // )
+  },
+
   render() {
     return (
       <Row className="show-grid">
@@ -45,12 +55,10 @@ const AcctInfo = React.createClass({
             <Tab eventKey={2} title="Balances"> 
               <GrowthChart details={this.props.details.balances} title="Account Net Balance" yAxis="Total Value (USD)" />
             </Tab>
-            <Tab eventKey={3} title="Transactions"> 
-              Date Picker module for record list of Account Transactions 
-            </Tab>
+            {this.props.records ? this.renderTransactions(this.props.records) : console.log("No Transactions available")}
           </Tabs>
         </Col>
-      </Row>
+      </Row>        
     )
   }
 });

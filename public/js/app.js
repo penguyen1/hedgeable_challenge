@@ -115,28 +115,13 @@ const App = React.createClass({
                 <small style={{fontSize:'20px'}}>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
                 <small style={{fontSize:'20px'}}>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
               </PageHeader>
-            
-              <Row className="show-grid">
-                <Col xs={9} md={6}>
-                  <Assets details={this.state.portfolio.balances.holdings}/>
-                </Col>
-                <Col xs={9} md={6}>
-                  <Tabs defaultActiveKey={1} id="growthChart-tabs">
-                    <Tab eventKey={1} title="Returns">
-                      <GrowthChart details={this.state.portfolio.balances.returns} title="Investment Returns" yAxis="(+/-) Returns" />
-                    </Tab>
-                    <Tab eventKey={2} title="Balances">
-                      <GrowthChart details={this.state.portfolio.balances.balances} title="Account Net Balance" yAxis="Total Value (USD)" />
-                    </Tab>
-                  </Tabs>
-                </Col>
-              </Row>              
+              <AcctInfo details={this.state.portfolio.balances} records={} />       
             </Tab>
 
             {this.state.portfolio.accountsInfo.map((el) =>
               <Tab key={el.account.id} eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
                 <Header details={el} />
-                <AcctInfo details={el.balances} />
+                <AcctInfo details={el.balances} records={el.transactions} />
               </Tab> 
             )}
           </Tabs>
