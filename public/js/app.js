@@ -11,8 +11,7 @@ const AcctInfo = require('./components/AcctInfo.js');
 const Header = require('./components/Header.js');
 const GrowthChart = require('./components/GrowthChart.js');
 // const AssetProfile = require('./components/AssetProfile.js');
-
-const baseURL = "https://api.hedgeable.com";
+const baseURL = "https://api.hedgeable.com";    // base Hedgeable API URL
 
 // Root Component
 const App = React.createClass({
@@ -115,9 +114,12 @@ const App = React.createClass({
     }, 1000);
   },
 
-  // updates currentAcctID when user navigates btw account tabs
+  // updates currentAcctID & firstDate when user navigates btw account tabs
   handleSelect(key) {
-    this.setState({ currentAcctID: key });
+    this.setState({ 
+      currentAcctID: key,
+       // find firstDate using AcctID 
+    });
   },
 
   render() {
