@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
-import { browserHistory, Router, Route, Link } from 'react-router'
 import { PageHeader } from 'react-bootstrap'         // any other modules???
 
+// Displays info of user's Portfolio & contributing Accounts
 const Header = React.createClass({
   getInitialState(){
     return {

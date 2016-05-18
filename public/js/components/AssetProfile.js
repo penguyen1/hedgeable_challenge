@@ -7,7 +7,8 @@ const Error = require('./404.js');
 // const Assets = require('./components/Assets.js');
 // const GrowthChart = require('./components/GrowthChart.js');
 
-const Holding = React.createClass({
+// Displays additional info of current Asset
+const AssetProfile = React.createClass({
   // context data from parent component
   contextTypes: {
     token: React.PropTypes.string.isRequired,
@@ -33,8 +34,8 @@ const Holding = React.createClass({
   render(){
     return (
       <div>
-        <h4>currently in Holding Component!</h4>
-        <div>Holding Info (total amount, quantity, market price, initial purchase price, weight, assetClass, name, ticker)</div>
+        <h4>currently in AssetProfile Component!</h4>
+        <div>AssetProfile Info (total amount, quantity, market price, initial purchase price, weight, assetClass, name, ticker)</div>
         <div>growthChart (balances, returns); stats: firstDate & lastDate</div>
       </div>
     )
@@ -52,4 +53,4 @@ const Holding = React.createClass({
 //   }
 // });
 
-module.exports = Holding;
+module.exports = AssetProfile;
