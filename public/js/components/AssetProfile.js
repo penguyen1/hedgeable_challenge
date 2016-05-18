@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
-import { Col, Grid, PageHeader, Row, Table } from 'react-bootstrap'         // any other modules???
+import { browserHistory, Router, Route, Link } from 'react-router'
+import { Jumbotron } from 'react-bootstrap'         // any other modules???
 
 // Components
 const Assets = require('./Assets.js');              // account holdings table of stocks|cash
@@ -24,15 +25,16 @@ const AssetProfile = React.createClass({
     console.log("AssetProfile - checking props: ", this.props)
   },
 
-  componentDidMount() {},
+  // componentDidMount() {},
 
   render() {
-  console.log("Hello from AssetProfile!!")
+    console.log("currently in AssetProfile!!")
     return (
-      <div>
-        <h1>currently in AssetProfile Component!</h1>
-        <div>growthChart (balances, returns); stats: firstDate & lastDate</div>
-      </div>
+      <Jumbotron>
+        <h1>Hello from within AssetProfile Component!!</h1>
+        <p>growthChart (balances, returns); stats: firstDate & lastDate</p>
+        <p>Hmm... I think something went wrong here..</p>
+      </Jumbotron>
     )
   }
 });

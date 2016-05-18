@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { render, ReactDOM } from 'react-dom'
-import { browserHistory, Router, Route, Link } from 'react-router'
+import { browserHistory, IndexRoute, Router, Route, Link } from 'react-router'
 import { Col, Grid, Jumbotron, PageHeader, Row, Tab, Tabs } from 'react-bootstrap'
 
 // Components
@@ -109,39 +109,11 @@ const App = React.createClass({
   },
 
   render() {
-    if(this.state.loading){
-      return (
-        <div id="container-bg">
-          <h3>Loading...</h3>
-        </div>
-      )
-    } else {
-      return (
-        <Grid>
-          <Jumbotron style={{height:'205px'}}>
-            <h1 style={{marginTop:'-10px'}}> Hello, {this.state.portfolio.client.firstName}! </h1>
-            <p>For more details, click on the tabs or list of assets below!</p>
-          </Jumbotron>
-          
-          <Tabs defaultActiveKey={1} animation={false} id="account-tabs">
-            <Tab eventKey={1} title="My Portfolio">
-              <PageHeader> Account Portfolio<br/>
-                <small style={{fontSize:'20px'}}>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
-                <small style={{fontSize:'20px'}}>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
-              </PageHeader>
-              <AcctInfo details={this.state.portfolio.balances} records={[]} />       
-            </Tab>
-
-            {this.state.portfolio.accountsInfo.map((el) =>
-              <Tab key={el.account.id} eventKey={el.account.id} title={el.account.name.split(' ').slice(1).join(' ')}> 
-                <Header details={el} />
-                <AcctInfo details={el.balances} records={el.transactions} />
-              </Tab> 
-            )}
-          </Tabs>
-        </Grid>
-      )
-    }   // end of if/else statement
+    return (
+      <div id="container-bg">
+        {this.props.children}
+      </div>
+    )
   }
 });
 
@@ -149,13 +121,14 @@ const App = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/acctInfo" component={AcctInfo}/>
-      <Route path="/assetProfile" component={AssetProfile}/>
-      <Route path="/assets" component={Assets}/>
-      <Route path="/growthChart" component={GrowthChart}/>
-      <Route path="/header" component={Header}/>
+      <IndexRoute component={Home} />
+      <Route path="/assetProfile" component={AssetProfile} />
+      <Route path="/acctInfo" component={AcctInfo} />
+      <Route path="/assets" component={Assets} />
+      <Route path="/growthChart" component={GrowthChart} />
+      <Route path="/header" component={Header} />
     </Route>
-    <Route path="*" component={Error}/>
+    <Route path="*" component={Error} />
   </Router>
 ), document.getElementById('container'));
 

@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import { Router, Route, Link } from 'react-router'
+import { browserHistory, Router, Route, Link } from 'react-router'
 import { Collapse, Panel, Table, Well } from 'react-bootstrap'         // any other modules???
 
 // Components
@@ -16,6 +16,12 @@ const Assets = React.createClass({
   //   event.preventDefault();
   //   this.context.router.replace('/assetProfile');
   // },
+
+  componentWillMount() {
+    // var routes = Router.getCurrentRoutes()
+    // console.log('Assets - currentRoutes', routes)
+    // console.log('Assets - currentRoutes', routes)
+  },
 
   renderAsset(asset) {
     // changes Cash securityID from 0 to 1393 
