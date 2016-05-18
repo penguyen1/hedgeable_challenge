@@ -9,8 +9,7 @@ var GrowthChart = React.createClass({
   getInitialState() {
     return {
       name: "",
-      values: [],
-      loading: true
+      values: []
     }
   },
 
@@ -43,6 +42,7 @@ var GrowthChart = React.createClass({
     chartData.push(data)
     // console.log('chartData: ', chartData[0])
 
+    // need to display years on x-axis! ****BONUS: years, 1,3,6 months, daily 
     return (
       <LineChart
         data={chartData}

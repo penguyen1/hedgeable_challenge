@@ -41,10 +41,8 @@ const Assets = React.createClass({
 const AssetInfo = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired,
-    token: React.PropTypes.string.isRequired,
-    usertoken: React.PropTypes.string.isRequired,
-    currentSecurityID: React.PropTypes.number.isRequired,
-    setCurrentSecurityID: React.PropTypes.func.isRequired
+    setCurrentSecurityID: React.PropTypes.func,
+    setStartDate: React.PropTypes.func
   },
 
   getInitialState() {
@@ -54,24 +52,25 @@ const AssetInfo = React.createClass({
   },
 
   // componentWillMount() {
-    // console.log("checking context: ", this.context)
-    // console.log("checking passed props: ", this.props.details)
+  //   // console.log("checking context: ", this.context)
+  //   console.log("checking passed props: ", this.props)
   // },
 
   handleClick(event) {
     event.preventDefault();
-    console.log("asset securityID clicked: ", this.props.details.security.id)
-    console.log("asset clicked: ", this.props.details)
-    console.log("passing start & end dates: ", this.props.date)
-    console.log("checking context router: ", this.context.router)
-    // this.context.router.replace('/assetProfile');
+    this.context.setCurrentSecurityID(this.props.details.security.id);
+    console.log("rendering profile of securityID: ", this.props.details.security.id);
+    this.context.setStartDate(this.props.date);
+    console.log("storing new startDate: ", this.props.date);
+    // console.log("asset clicked: ", this.props.details)      // ajax + this.context.currentSecurityID
 
+    // this.context.router.replace('/assetProfile');
     // this.setState({ open: !this.state.open });      // toggles collapsible panel for Transactions data
   },
 
   render() {
     var pricePerShare = this.props.details.amount/this.props.details.shares;
-    console.log('this.props: ', this.props)
+    // console.log('this.props: ', this.props)
     return (
       <tr key={this.props.details.security.id} onClick={this.handleClick}>
         <td>{this.props.details.security.name}</td>

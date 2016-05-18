@@ -19,10 +19,9 @@ const App = React.createClass({
     return {
       token: "",
       usertoken: "",
-      clientID: 0,
-      currentAcctID: 1,        
-      currentSecurityID: 0,
-      firstDate: "",       
+      clientID: 0,    
+      currentSecurityID: 0,   
+      startDate: "",  
       portfolio: {},
       loading: true
     }
@@ -33,12 +32,10 @@ const App = React.createClass({
     token: React.PropTypes.string,
     usertoken: React.PropTypes.string,
     clientID: React.PropTypes.number,
-    currentAcctID: React.PropTypes.number,
-    setCurrentAcctID: React.PropTypes.func,
     currentSecurityID: React.PropTypes.number,
     setCurrentSecurityID: React.PropTypes.func,
-    firstDate: React.PropTypes.string,
-    setFirstDate: React.PropTypes.func    
+    startDate: React.PropTypes.string,
+    setStartDate: React.PropTypes.func   
   },
 
   getChildContext() {
@@ -46,25 +43,25 @@ const App = React.createClass({
       token: this.state.token,
       usertoken: this.state.usertoken,
       clientID: this.state.clientID,
-      currentAcctID: this.state.currentAcctID,
-      setCurrentAcctID: this.setCurrentAcctID,
       currentSecurityID: this.state.currentSecurityID,
       setCurrentSecurityID: this.setCurrentSecurityID,
-      firstDate: this.state.firstDate,
-      setFirstDate: this.setFirstDate
+      startDate: this.state.startDate,
+      setStartDate: this.setStartDate
     }
   },
 
-  setCurrentAcctID(id) { 
-   this.setState({ currentAcctID: id })
-  },
-
   setCurrentSecurityID(id) { 
-   this.setState({ currentSecurityID: id })
+    this.setState({ currentSecurityID: id }, 
+      function(){ 
+        console.log('updated new securityID ', this.state) 
+      });
   },
 
-  setFirstDate(str) { 
-   this.setState({ firstDate: str })
+  setStartDate(date) { 
+    this.setState({ startDate: date },
+      function(){
+        console.log('updated new startDate ', this.state)
+      });
   },
 
   componentWillMount() {
@@ -96,10 +93,7 @@ const App = React.createClass({
           dataType: 'json'
         }).done((data) => {
           // console.log('Entire client portfolio: ', data.response)
-          this.setState({ 
-            portfolio: data.response,       // entire portfolio + accounts
-            firstDate: data.response.balances.stats.firstDate // firstDate of portfolio
-          });
+          this.setState({ portfolio: data.response });
           console.log('this.state: ', this.state)
         });
       });
@@ -112,14 +106,6 @@ const App = React.createClass({
     setTimeout(() => {
       self.setState({ loading: false })       
     }, 1000);
-  },
-
-  // updates currentAcctID & firstDate when user navigates btw account tabs
-  handleSelect(key) {
-    this.setState({ 
-      currentAcctID: key,
-       // find firstDate using AcctID 
-    });
   },
 
   render() {
@@ -137,13 +123,13 @@ const App = React.createClass({
             <p>For more details, click on the tabs or list of assets below!</p>
           </Jumbotron>
           
-          <Tabs activeKey={this.state.currentAcctID} animation={false} onSelect={this.handleSelect} id="account-tabs">
+          <Tabs defaultActiveKey={1} animation={false} id="account-tabs">
             <Tab eventKey={1} title="My Portfolio">
               <PageHeader> Account Portfolio<br/>
                 <small style={{fontSize:'20px'}}>Current balance: ${this.state.portfolio.latestBalance.toLocaleString()}</small><br/>
                 <small style={{fontSize:'20px'}}>Hedged percentage: {this.state.portfolio.hedgedPercentage.toFixed(3)}%</small>
               </PageHeader>
-              <AcctInfo details={this.state.portfolio.balances} records={null} />       
+              <AcctInfo details={this.state.portfolio.balances} records={[]} />       
             </Tab>
 
             {this.state.portfolio.accountsInfo.map((el) =>
@@ -163,11 +149,12 @@ const App = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/assets" component={Assets}/>
-      <Route path="/acctInfo" component={AcctInfo}/>
-      <Route path="/header" component={Header}/>
-      <Route path="/growthChart" component={GrowthChart}/>
     </Route>
     <Route path="*" component={Error}/>
   </Router>
 ), document.getElementById('container'));
+
+      // <Route path="/acctInfo" component={AcctInfo}/>
+      // <Route path="/assets" component={Assets}/>
+      // <Route path="/growthChart" component={GrowthChart}/>
+      // <Route path="/header" component={Header}/>
