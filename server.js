@@ -1,31 +1,28 @@
 require('dotenv').config();
 'use strict'
 const express     = require('express');
-const logger      = require('morgan');      
-const path        = require('path');
-const bodyParser  = require('body-parser');
+const logger      = require('morgan');        // logs request details
+const path        = require('path');          // defines API route paths
+const bodyParser  = require('body-parser');   // parses user input into JSON
 const app         = express();
 
+  // user auth necessary? - ask Kristi!
 // const secret = process.env.SECRET;
-// const expressJWT = require('express-jwt');
+// const expressJWT = require('express-jwt');     
 // const jwt = require('jsonwebtoken');
 
 // const userRoutes = require( path.join(__dirname, '/routes/users'));
-// const huntRoutes = require( path.join(__dirname, '/routes/hunts'));
+// app.use('/users', userRoutes);
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// app.use('/api/v1/users', userRoutes);
-// app.use('/api/v1/hunts', huntRoutes);
-
 // HOMEPAGE
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'))
 });
-
 
 
 var port = process.env.PORT || 3000;
