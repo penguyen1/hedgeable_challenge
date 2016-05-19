@@ -1,1 +1,0 @@
-# hedgeable_challenge
