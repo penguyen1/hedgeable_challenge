@@ -148,20 +148,20 @@ const AssetProfile = React.createClass({
       var marketValue = (this.state.assetInfo.amount/this.state.assetInfo.shares).toFixed(2)
       return (
         <Grid>
-          <Jumbotron style={{height:'205px'}}>
-            <h1 style={{marginTop:'-10px', color:'#254871'}}>{this.state.assetInfo.security.name} ({this.state.assetInfo.security.ticker})</h1><br/>
-            <h4><strong>AssetClass:</strong>  {this.state.assetInfo.security.assetClass}</h4>
-            <h4><strong>Quantity:</strong>  {this.state.assetInfo.shares.toFixed(2)}</h4>
-            <h4><strong>Initial Purchase Price:</strong>  ${this.state.securityPrices[0].value.toFixed(2)}</h4>
-            <h4><strong>Market Value Price:</strong>  ${marketValue}</h4>
-            <h4><strong>Percentage of Account:</strong>  {(this.state.assetInfo.weight*100).toFixed(2)}%</h4>
-            <h4><strong>Total Net Balance:</strong>  ${toUSDCurrency(this.state.assetInfo.amount)}</h4>
-          </Jumbotron>
-          
+          <Row className="show-grid">
+            <Jumbotron style={{height:'205px'}}>
+              <h1 style={{marginTop:'-10px', color:'#254871'}}>{this.state.assetInfo.security.name} ({this.state.assetInfo.security.ticker})</h1><br/>
+              <h4><strong>Asset Class:</strong>  {this.state.assetInfo.security.assetClass}</h4>
+              <h4><strong>Quantity:</strong>  {this.state.assetInfo.shares.toFixed(2)}</h4>
+              <h4><strong>Initial Purchase Price:</strong>  ${this.state.securityPrices[0].value.toFixed(2)}</h4>
+              <h4><strong>Market Value Price:</strong>  ${marketValue}</h4>
+              <h4><strong>Percentage of Account:</strong>  {(this.state.assetInfo.weight*100).toFixed(2)}%</h4>
+              <h4><strong>Total Net Balance:</strong>  ${toUSDCurrency(this.state.assetInfo.amount)}</h4>
+            </Jumbotron>
+          </Row>
           <Row className="show-grid">
             <Col xs={18} md={12}>
-              Line Chart here
-              {/* Line Chart here */}
+              <Graph data={this.state.benchData} />
             </Col>
           </Row>     
         </Grid>
@@ -170,34 +170,71 @@ const AssetProfile = React.createClass({
   }
 });
 
-module.exports = AssetProfile;
+
+var Graph = React.createClass({
+  render() {
+    var arrayOfObjs = []
+
+    this.props.data.forEach(bm => {
+      console.log('b4 bm: ', bm)
+      var revised = {}
+
+      revised['name'] = bm.name
+      revised['values'] = bm.values.map(el => {
+        var info = {}
+        info['x'] = Date.parse(el.date)
+        info['y'] = el.value
+        return info
+      })
+
+      console.log('revised: ', revised)
+      arrayOfObjs.push(revised)
+    });
+
+    console.log('what it look like: ', arrayOfObjs)
 
 
-// data template
-// x: +(date), y: value
+    // var chartData = []
+    // var data = {}
+    // data.name = this.state.name
+    // data.values = arrayOfObjs
+    // chartData.push(data)
+    // console.log('chartData: ', chartData[0])
+
+    // need to display years on x-axis!
+    return (
+      <LineChart
+        data={lineData}
+        width="100%"
+        height={400}
+        viewBoxObject={{
+          x: 0,
+          y: 0,
+          height: 400,
+          width: 700
+        }}
+        title="Wuhhhhhhhhht"
+        xAxisTickInterval={{unit: 'year', interval: 2}}
+        xAxisLabel="Time Interval (years)"
+        yAxisLabel="The mulah"
+        xAccessor={ (d) => d.x }
+        yAccessor={ (d) => d.y } 
+        gridHorizontal={true} />
+    )
+  }
+});
+
 var lineData = [
-  { 
-    name: 'S&P 500 Index',
+  { name: 'series1',
     values: [ { x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 } ],
-    color: "green"
-  },
-  {
-    name: 'Dow Jones Industrial Average',
-    values : [ { x: 0, y: 8 }, { x: 1, y: 5 }, { x: 2, y: 20 }, { x: 3, y: 12 }, { x: 4, y: 4 }, { x: 5, y: 6 }, { x: 6, y: 2 } ],
-    color: "yellow"
-  },
-  {
-    name: 'Russell 2000 Index',
-    values: [ { x: 0, y: 0 }, { x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 2 }, { x: 4, y: 6 }, { x: 5, y: 4 }, { x: 6, y: 2 } ],
-    color: "light-blue"
-  },
-  {
-    name: '(insert Asset Name here)',
-    values: [ "ajax call to", "securityPrice", "from", "startDate", "tonow" ],
     strokeWidth: 3,
-    strokeDashArray: "5,5",
-    color: "red"
-  } 
-];
+    strokeDashArray: "5,5"
+  },
+  { name: 'series2',
+    values : [ { x: 0, y: 8 }, { x: 1, y: 5 }, { x: 2, y: 20 }, { x: 3, y: 12 }, { x: 4, y: 4 }, { x: 5, y: 6 }, { x: 6, y: 2 } ]
+  },
+  { name: 'series3',
+    values: [ { x: 0, y: 0 }, { x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 2 }, { x: 4, y: 6 }, { x: 5, y: 4 }, { x: 6, y: 2 } ]
+  }];
 
-
+module.exports = AssetProfile;

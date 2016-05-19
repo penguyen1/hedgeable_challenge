@@ -21,12 +21,6 @@ var GrowthChart = React.createClass({
   },
 
   render() {
-    // var arrayOfArrays = this.state.values.map(el => {
-    //   var info = []
-    //   info.push(el.date)
-    //   info.push(el.value)
-    //   return info
-    // });
     var arrayOfObjs = this.state.values.map(el => {
       var info = {}
       info['x'] = Date.parse(el.date)
@@ -42,7 +36,7 @@ var GrowthChart = React.createClass({
     chartData.push(data)
     // console.log('chartData: ', chartData[0])
 
-    // need to display years on x-axis! ****BONUS: years, 1,3,6 months, daily 
+    // need to display years on x-axis!
     return (
       <LineChart
         data={chartData}
@@ -85,12 +79,3 @@ module.exports = GrowthChart;
     //     return new Date(d.date);
     //   }}
     //   yAccessor={(d)=>d.value} />
-
-// var lineData = [{ 
-//       name: 'series1',
-//       values: [ { x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 } ],
-//       strokeWidth: 3,
-//       strokeDashArray: "5,5",
-//     }];
-
-
