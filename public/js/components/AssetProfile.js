@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import { Col, Collapse, Grid, Jumbotron, Panel, Row, Well } from 'react-bootstrap'         // any other modules???
+import { Accordion, Col, Collapse, Grid, Jumbotron, Panel, Row, Tab, Tabs, Well } from 'react-bootstrap'
 import rd3 from 'rd3';
 const LineChart = rd3.LineChart;
 const baseURL = "https://api.hedgeable.com";    // base Hedgeable API URL
@@ -141,29 +141,51 @@ const AssetProfile = React.createClass({
     if(this.state.loading){
       return (
         <div id="container-bg">
-          <h1 style={{marginTop:'200px'}}>Helloo Handsome!</h1>
+          <h1 style={{marginTop:'200px'}}>Wait for it...</h1>
         </div>
       )
     } else {
       var marketValue = (this.state.assetInfo.amount/this.state.assetInfo.shares).toFixed(2)
       return (
         <Grid>
-          <Row className="show-grid">
-            <Jumbotron style={{height:'205px'}}>
-              <h1 style={{marginTop:'-10px', color:'#254871'}}>{this.state.assetInfo.security.name} ({this.state.assetInfo.security.ticker})</h1><br/>
-              <h4><strong>Asset Class:</strong>  {this.state.assetInfo.security.assetClass}</h4>
-              <h4><strong>Quantity:</strong>  {this.state.assetInfo.shares.toFixed(2)}</h4>
-              <h4><strong>Initial Purchase Price:</strong>  ${this.state.securityPrices[0].value.toFixed(2)}</h4>
-              <h4><strong>Market Value Price:</strong>  ${marketValue}</h4>
-              <h4><strong>Percentage of Account:</strong>  {(this.state.assetInfo.weight*100).toFixed(2)}%</h4>
-              <h4><strong>Total Net Balance:</strong>  ${toUSDCurrency(this.state.assetInfo.amount)}</h4>
-            </Jumbotron>
-          </Row>
+          <Jumbotron style={{height:'205px'}}>
+            <h1 style={{marginTop:'-10px', color:'#254871'}}>{this.state.assetInfo.security.name} ({this.state.assetInfo.security.ticker})</h1><br/>
+          </Jumbotron>
+
           <Row className="show-grid">
             <Col xs={18} md={12}>
-              <Graph data={this.state.benchData} />
+              <Tabs defaultActiveKey={1} id="assetProfile-tabs">
+                <Tab eventKey={1} title="Info"> 
+                  <Accordion>
+                    <Panel header="Asset Purchase Price" eventKey="1">
+                      <Well style={{fontSize:'30px', color:'#ab5462'}}>
+                        Initial Purchase Price: <strong>${this.state.securityPrices[0].value.toFixed(2)}</strong><br/>
+                        Market Value Price: <strong>${marketValue}</strong><br/>
+                      </Well>
+                    </Panel>
+                    <Panel header="Total.." eventKey="2">
+                      <Well  style={{fontSize:'30px', color:'#853334'}}>
+                        Quantity: <strong>{this.state.assetInfo.shares.toFixed(2)} shares</strong><br/>
+                        Balance: <strong>${toUSDCurrency(this.state.assetInfo.amount)}</strong><br/>
+                      </Well>
+                    </Panel>
+                    <Panel header="More Info" eventKey="3">
+                      <Well  style={{fontSize:'30px', color:'#6491a6'}}> 
+                        Asset Class Category: <strong>{this.state.assetInfo.security.assetClass}</strong><br/>
+                        Percentage of Account: <strong>{(this.state.assetInfo.weight*100).toFixed(2)}%</strong><br/>
+                      </Well>
+                    </Panel>
+                  </Accordion>
+                </Tab>
+                <Tab eventKey={2} title="Asset vs Benchmarks"> 
+                  <Graph data={this.state.benchData} />
+                </Tab>
+                <Tab eventKey={3} title="Transactions Database" disabled> 
+                  Render filtered transactions here
+                </Tab>
+              </Tabs>
             </Col>
-          </Row>     
+          </Row>    
         </Grid>
       )
     }
@@ -176,65 +198,43 @@ var Graph = React.createClass({
     var arrayOfObjs = []
 
     this.props.data.forEach(bm => {
-      console.log('b4 bm: ', bm)
       var revised = {}
-
       revised['name'] = bm.name
+
       revised['values'] = bm.values.map(el => {
         var info = {}
         info['x'] = Date.parse(el.date)
         info['y'] = el.value
         return info
       })
-
-      console.log('revised: ', revised)
       arrayOfObjs.push(revised)
     });
-
-    console.log('what it look like: ', arrayOfObjs)
-
-
-    // var chartData = []
-    // var data = {}
-    // data.name = this.state.name
-    // data.values = arrayOfObjs
-    // chartData.push(data)
-    // console.log('chartData: ', chartData[0])
 
     // need to display years on x-axis!
     return (
       <LineChart
-        data={lineData}
-        width="100%"
-        height={400}
+        legend={true}
+        legendOffset={300}
+        data={arrayOfObjs}
+        width={800}
+        height={600}
         viewBoxObject={{
           x: 0,
           y: 0,
           height: 400,
-          width: 700
+          width: 600
         }}
-        title="Wuhhhhhhhhht"
+        title="Value comparison against S&P 500, Dow Jones & Russell 2000 Benchmarks"
         xAxisTickInterval={{unit: 'year', interval: 2}}
-        xAxisLabel="Time Interval (years)"
-        yAxisLabel="The mulah"
+        xAxisLabel="Time Interval"
+        yAxisLabel="Index Value"
+        xAxisLabelOffset={60}
+        yAxisLabelOffset={60}
         xAccessor={ (d) => d.x }
         yAccessor={ (d) => d.y } 
         gridHorizontal={true} />
     )
   }
 });
-
-var lineData = [
-  { name: 'series1',
-    values: [ { x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 } ],
-    strokeWidth: 3,
-    strokeDashArray: "5,5"
-  },
-  { name: 'series2',
-    values : [ { x: 0, y: 8 }, { x: 1, y: 5 }, { x: 2, y: 20 }, { x: 3, y: 12 }, { x: 4, y: 4 }, { x: 5, y: 6 }, { x: 6, y: 2 } ]
-  },
-  { name: 'series3',
-    values: [ { x: 0, y: 0 }, { x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 2 }, { x: 4, y: 6 }, { x: 5, y: 4 }, { x: 6, y: 2 } ]
-  }];
 
 module.exports = AssetProfile;

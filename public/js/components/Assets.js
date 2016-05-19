@@ -1,17 +1,12 @@
 'use strict'
 import React from 'react'
-import { browserHistory, Router, Route, Link } from 'react-router'
-import { Table } from 'react-bootstrap'         // any other modules???
+import { Table } from 'react-bootstrap'       
 
 // Components
 // const AssetProfile = require('./AssetProfile.js');
 
 // Displays all asset investments of User's Portfolio & Accounts
 const Assets = React.createClass({
-  componentWillMount() {
-    // console.log('Assets - current props: ', this.props);
-  },
-
   renderAsset(asset) {
     // changes Cash securityID from 0 to 1393 
     // asset.security.id = (asset.security.id < 1 ? 1393 : asset.security.id);

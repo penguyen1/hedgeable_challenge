@@ -57,7 +57,7 @@ const Home = React.createClass({
     if(this.state.loading){
       return (
         <div id="container-bg">
-          <h1 style={{marginTop:'200px'}}>Helloo Handsome!</h1>
+          <h1 style={{marginTop:'200px'}}>Hellloooo Handsomee!!</h1>
         </div>
       )
     } else {
