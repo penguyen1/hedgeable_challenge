@@ -5,6 +5,7 @@ import rd3 from 'rd3';
 const LineChart = rd3.LineChart;
 const baseURL = "https://api.hedgeable.com";    // base Hedgeable API URL
 
+// template for benchmark data comparisons
 var benchmarkData = [
   { id: 3,
     name: 'S&P 500 Index',
@@ -16,6 +17,11 @@ var benchmarkData = [
     name: 'Russell 2000 Index',
     values: [] } 
 ];
+
+// converts int/float into USD currency 
+var toUSDCurrency = function(num){
+  return num.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
 
 // Displays current Asset information
 const AssetProfile = React.createClass({
@@ -33,7 +39,8 @@ const AssetProfile = React.createClass({
       assetInfo: {},
       transactions: [],
       securityPrices: [],
-      benchData: []
+      benchData: [],
+      loading: true
     }
   },
 
@@ -110,7 +117,6 @@ const AssetProfile = React.createClass({
     });
   },
 
-
   getBenchmarkData(x) {
     // gets Benchmark data (S&P 500, Dow Jones, Russell 2000) from startDate - today
     $.ajax({
@@ -123,27 +129,44 @@ const AssetProfile = React.createClass({
     }); 
   },
 
+  // delays render() - allows returning API data to be completed
+  componentDidMount() {
+    var self = this;
+    setTimeout(() => {
+      self.setState({ loading: false })       
+    }, 1000);
+  },
+
   render() {
-    return (
-      <Grid>
-        <Jumbotron style={{height:'205px'}}>
-          <h1 style={{marginTop:'-10px'}}> Asset Name (Ticker) </h1>
-          <p>AssetClass: ....</p>
-          <p>Quantity: ....</p>
-          <p>Initial Purchase Price($): ....</p>
-          <p>Market Value Price($): .... (+/- Gains)</p>
-          <p>Percentage of Account(%): ....</p>
-          <p>Total Net Balance($): ....</p>
-        </Jumbotron>
-        
-        <Row className="show-grid">
-          <Col xs={18} md={12}>
-            Line Chart here
-            {/* Line Chart here */}
-          </Col>
-        </Row>     
-      </Grid>
-    )
+    if(this.state.loading){
+      return (
+        <div id="container-bg">
+          <h1 style={{marginTop:'200px'}}>Helloo Handsome!</h1>
+        </div>
+      )
+    } else {
+      var marketValue = (this.state.assetInfo.amount/this.state.assetInfo.shares).toFixed(2)
+      return (
+        <Grid>
+          <Jumbotron style={{height:'205px'}}>
+            <h1 style={{marginTop:'-10px', color:'#254871'}}>{this.state.assetInfo.security.name} ({this.state.assetInfo.security.ticker})</h1><br/>
+            <h4><strong>AssetClass:</strong>  {this.state.assetInfo.security.assetClass}</h4>
+            <h4><strong>Quantity:</strong>  {this.state.assetInfo.shares.toFixed(2)}</h4>
+            <h4><strong>Initial Purchase Price:</strong>  ${this.state.securityPrices[0].value.toFixed(2)}</h4>
+            <h4><strong>Market Value Price:</strong>  ${marketValue}</h4>
+            <h4><strong>Percentage of Account:</strong>  {(this.state.assetInfo.weight*100).toFixed(2)}%</h4>
+            <h4><strong>Total Net Balance:</strong>  ${toUSDCurrency(this.state.assetInfo.amount)}</h4>
+          </Jumbotron>
+          
+          <Row className="show-grid">
+            <Col xs={18} md={12}>
+              Line Chart here
+              {/* Line Chart here */}
+            </Col>
+          </Row>     
+        </Grid>
+      )
+    }
   }
 });
 
